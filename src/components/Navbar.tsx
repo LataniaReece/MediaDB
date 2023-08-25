@@ -29,11 +29,11 @@ const DRAWER_WIDTH = 240;
 const styles: StylesObject = {
   navbar: {
     backgroundColor: AppColors.blue,
-    width: { xs: "100%", sm: `calc(100% - ${DRAWER_WIDTH}px)` },
-    ml: { xs: 0, sm: `${DRAWER_WIDTH}px` },
+    width: { xs: "100%", md: `calc(100% - ${DRAWER_WIDTH}px)` },
+    ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
   },
   navbarContentContainer: {
-    display: { xs: "flex", sm: "none" },
+    display: { xs: "flex", md: "none" },
     backgroundColor: AppColors.blue,
   },
   logo: {
@@ -43,16 +43,16 @@ const styles: StylesObject = {
     whiteSpace: "nowrap",
     borderRadius: 0,
     backgroundColor: AppColors.blue,
-    pt: { xs: 8, sm: 2 },
+    pt: { xs: 8, md: 2 },
     pl: 2,
   },
   openIcon: {
     mr: 2,
-    display: { sm: "none" },
+    display: { md: "none" },
     color: "white",
   },
   closeIcon: {
-    display: { xs: "block", sm: "none" },
+    display: { xs: "block", md: "none" },
     color: "white",
     position: "absolute",
     top: 0,
@@ -85,14 +85,14 @@ const styles: StylesObject = {
     width: "100%",
   },
   mobileDrawer: {
-    display: { xs: "block", sm: "none" },
+    display: { xs: "block", md: "none" },
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: DRAWER_WIDTH,
     },
   },
   desktopDrawer: {
-    display: { xs: "none", sm: "block" },
+    display: { xs: "none", md: "block" },
     width: DRAWER_WIDTH,
     flexShrink: 0,
     "& .MuiDrawer-paper": {
@@ -106,7 +106,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleCloseNavMenu = () => {
     setMobileOpen(false);

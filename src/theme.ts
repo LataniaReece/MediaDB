@@ -23,6 +23,9 @@ const theme = createTheme({
     allVariants: {
       fontFamily: "Roboto",
     },
+    h1: {
+      fontSize: 36,
+    },
   },
   components: {
     MuiButton: {
