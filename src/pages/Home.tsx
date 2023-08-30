@@ -16,6 +16,11 @@ const styles: StylesObject = {
     gap: "16px",
     justifyContent: "center",
   },
+  paginationContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 };
 
 export default function Home() {
@@ -84,14 +89,16 @@ export default function Home() {
           })}
         </Grid>
       )}
-      <Stack spacing={2}>
-        <Typography>Page: {page}</Typography>
-        <Pagination
-          // Although we have total_pages, api only allows pages up to 500
-          count={total_pages > 500 ? 500 : total_pages}
-          page={page}
-          onChange={handlePageChange}
-        />
+      <Stack spacing={2} sx={{ mt: 2 }}>
+        <Box sx={styles.paginationContainer}>
+          <Typography>Page: {page}</Typography>
+          <Pagination
+            // Although we have total_pages, api only allows pages up to 500
+            count={total_pages > 500 ? 500 : total_pages}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Box>
       </Stack>
     </PageWrapper>
   );

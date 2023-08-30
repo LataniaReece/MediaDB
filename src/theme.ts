@@ -44,6 +44,20 @@ const theme = createTheme({
         }),
       },
     },
+    MuiPagination: {
+      styleOverrides: {
+        ul: {
+          "& .Mui-selected": {
+            backgroundColor: AppColors.blueLight,
+          },
+          "& .MuiButtonBase-root": {
+            "&:hover": {
+              backgroundColor: AppColors.blueLight,
+            },
+          },
+        },
+      },
+    },
   },
 });
 
