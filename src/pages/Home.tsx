@@ -8,13 +8,14 @@ import useGetMovies from "../hooks/apiHooks/useGetMovies";
 import useGetGenres from "../hooks/apiHooks/useGetGenres";
 import { StylesObject } from "../types/utility";
 import MovieItem from "../components/movies/MovieItem";
+import SearchMovies from "../components/movies/SearchMovies";
 
 const styles: StylesObject = {
-  movieGridContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: "16px",
-    justifyContent: "center",
+  headerContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    mb: 2,
   },
   paginationContainer: {
     display: "flex",
@@ -25,8 +26,11 @@ const styles: StylesObject = {
 
 export default function Home() {
   const [page, setPage] = useState(1);
+  const [requestedQuery, setRequestedQuery] = useState("");
 
-  const movieListUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
+  const movieListUrl = requestedQuery
+    ? `https://api.themoviedb.org/3/search/movie?query=${requestedQuery}&language=en-US&page=${page}`
+    : `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
   const genreListUrl = `https://api.themoviedb.org/3/genre/movie/list`;
 
   const {
@@ -68,21 +72,24 @@ export default function Home() {
 
   return (
     <PageWrapper>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <Typography variant="h1">Top Rated Movies</Typography>
+      <SearchMovies setRequestedQuery={setRequestedQuery} />
+      <Box sx={styles.headerContainer}>
+        <Typography variant="h1">
+          {requestedQuery
+            ? `Search Results: ${requestedQuery}`
+            : "Top Rated Movies"}
+        </Typography>
         <Typography
           sx={{ fontStyle: "italic" }}
         >{`${total_results} movies`}</Typography>
       </Box>
       {movieDataResults && movieDataResults.length > 0 && (
-        <Grid container sx={styles.movieGridContainer}>
+        <Grid
+          container
+          columnSpacing={1}
+          rowSpacing={{ xs: 4, md: 3 }}
+          sx={styles.movieGridContainer}
+        >
           {movieDataResults.map((movie) => {
             const genres = getGenres(movie.genre_ids);
             return <MovieItem key={movie.id} movie={movie} genres={genres} />;

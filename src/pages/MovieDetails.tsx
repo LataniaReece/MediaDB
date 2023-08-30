@@ -30,6 +30,7 @@ const styles: StylesObject = {
     fontWeight: "bold",
     mb: 2,
     letterSpacing: "2px",
+    textAlign: "center",
   },
   tagline: {
     fontStyle: "italic",

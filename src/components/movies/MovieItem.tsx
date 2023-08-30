@@ -1,6 +1,7 @@
 import { Box, Grid, Link, Typography } from "@mui/material";
 import { StylesObject } from "../../types/utility";
 import { Movie } from "../../types/api";
+import placeholder from "../../images/movieItemPlaceholder.jpg";
 
 interface MovieItemProps {
   movie: Movie;
@@ -12,9 +13,6 @@ const styles: StylesObject = {
     transition: "transform 0.3s, border 0.3s",
     "&:hover": {
       transform: "scale(1.05)",
-    },
-    "&.MuiGrid-item": {
-      pl: 0,
     },
   },
   movieImg: {
@@ -40,11 +38,23 @@ const styles: StylesObject = {
 
 function MovieItem({ movie, genres }: MovieItemProps) {
   return (
-    <Grid key={movie.id} item sx={styles.movieGridItem}>
+    <Grid
+      key={movie.id}
+      item
+      sx={styles.movieGridItem}
+      xs={6}
+      sm={4}
+      md={3}
+      lg={2}
+    >
       <Link href={`/movies/${movie.id}`} sx={styles.movieLink}>
         <Box
           component="img"
-          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+              : placeholder
+          }
           alt={movie.title}
           sx={styles.movieImg}
         />
