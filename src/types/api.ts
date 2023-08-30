@@ -23,12 +23,13 @@ export interface GetGenresResponse {
 
 export interface GetMovieDetailsReponse {
   genres: Genre[];
-  id: number;
   overview: string;
   popularity: number;
-  poster_path: string;
+  backdrop_path: string;
   release_date: string;
   title: string;
+  tagline: string;
+  imdb_id: string;
 }
 
 export interface Genre {

@@ -44,7 +44,7 @@ function MovieItem({ movie, genres }: MovieItemProps) {
       <Link href={`/movies/${movie.id}`} sx={styles.movieLink}>
         <Box
           component="img"
-          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.title}
           sx={styles.movieImg}
         />

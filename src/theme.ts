@@ -1,18 +1,14 @@
 import { createTheme } from "@mui/material/styles";
 
 const AppColors = {
-  bgColor: "#F3F1F2",
-
   blue: "#454B63",
   blueLight: "#9FA5BC",
+  blueLighter: "#E7E9EF",
   blueDark: "#2A2D3C",
 };
 
 const theme = createTheme({
   palette: {
-    background: {
-      default: AppColors.bgColor,
-    },
     primary: {
       main: AppColors.blue,
       dark: AppColors.blueDark,
@@ -25,6 +21,12 @@ const theme = createTheme({
     },
     h1: {
       fontSize: 36,
+    },
+    h2: {
+      fontSize: 30,
+    },
+    h3: {
+      fontSize: 24,
     },
   },
   components: {
