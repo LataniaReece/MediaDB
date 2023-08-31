@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Box, Grid, Link, Typography } from "@mui/material";
 import { StylesObject } from "../../types/utility";
 import { Movie } from "../../types/api";
@@ -36,7 +37,7 @@ const styles: StylesObject = {
   },
 };
 
-function MovieItem({ movie, genres }: MovieItemProps) {
+const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
   return (
     <Grid
       key={movie.id}
@@ -63,6 +64,6 @@ function MovieItem({ movie, genres }: MovieItemProps) {
       </Link>
     </Grid>
   );
-}
+};
 
 export default MovieItem;

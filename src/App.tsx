@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -6,7 +7,7 @@ import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 import { theme } from "./theme";
 
-function App() {
+const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -28,6 +29,6 @@ function App() {
       </AppContextProvider>
     </ThemeProvider>
   );
-}
+};
 
 export default App;

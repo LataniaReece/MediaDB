@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { Box, SxProps, Theme } from "@mui/material";
 
-export default function PageWrapper(props: {
+const PageWrapper: FC<{
   children: JSX.Element | Array<JSX.Element | null | false | "">;
   sx?: SxProps<Theme>;
-}): JSX.Element {
+}> = (props) => {
   return (
     <Box
       component="main"
@@ -18,4 +19,6 @@ export default function PageWrapper(props: {
       {props.children}
     </Box>
   );
-}
+};
+
+export default PageWrapper;

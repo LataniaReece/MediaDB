@@ -1,10 +1,11 @@
+import { FC } from "react";
 import { SxProps, Theme, Typography } from "@mui/material";
 import PageWrapper from "./PageWrapper";
 
-export default function PageLoader(props: {
+const PageLoader: FC<{
   children: string;
   sx?: SxProps<Theme>;
-}): JSX.Element {
+}> = (props) => {
   return (
     <PageWrapper
       sx={{ height: "100%", textAlign: "center", mt: 10, ...props.sx }}
@@ -15,4 +16,6 @@ export default function PageLoader(props: {
       <span className="loader"></span>
     </PageWrapper>
   );
-}
+};
+
+export default PageLoader;

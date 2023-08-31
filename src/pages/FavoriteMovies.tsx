@@ -1,9 +1,11 @@
+import { FC } from "react";
 import PageWrapper from "../components/PageWrapper";
 
-export default function FavoriteMovies() {
+const FavoriteMovies: FC = () => {
   return (
     <PageWrapper>
       <>Favorite Movies</>
     </PageWrapper>
   );
-}
+};
+export default FavoriteMovies;

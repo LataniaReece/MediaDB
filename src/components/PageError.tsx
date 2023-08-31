@@ -1,10 +1,12 @@
+import { FC } from "react";
 import { Button, SxProps, Theme, Typography } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import PageWrapper from "./PageWrapper";
 
-export default function PageError(props: { sx?: SxProps<Theme> }): JSX.Element {
+const PageError: FC<{ sx?: SxProps<Theme> }> = (props) => {
   const location = useLocation();
+
   return (
     <PageWrapper
       sx={{ height: "100%", textAlign: "center", mt: 10, ...props.sx }}
@@ -20,4 +22,6 @@ export default function PageError(props: { sx?: SxProps<Theme> }): JSX.Element {
       )}
     </PageWrapper>
   );
-}
+};
+
+export default PageError;

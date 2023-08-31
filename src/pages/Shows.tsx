@@ -1,9 +1,11 @@
+import { FC } from "react";
 import PageWrapper from "../components/PageWrapper";
 
-export default function Shows() {
+const Shows: FC = () => {
   return (
     <PageWrapper>
       <>Shows</>
     </PageWrapper>
   );
-}
+};
+export default Shows;

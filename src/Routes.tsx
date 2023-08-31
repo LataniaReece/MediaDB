@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Route, Routes as RouterRoutes } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -7,7 +8,7 @@ import Shows from "./pages/Shows";
 import Movies from "./pages/Movies";
 import MovieDetails from "./pages/MovieDetails";
 
-export default function Routes() {
+const Routes: FC = () => {
   return (
     <RouterRoutes>
       <Route path="/favorites/shows" element={<FavoriteShows />} />
@@ -18,4 +19,6 @@ export default function Routes() {
       <Route path="/" element={<Home />} />
     </RouterRoutes>
   );
-}
+};
+
+export default Routes;

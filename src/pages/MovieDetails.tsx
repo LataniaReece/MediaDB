@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import useGetMovieDetails from "../hooks/apiHooks/useGetMovieDetails";
@@ -57,7 +57,7 @@ const styles: StylesObject = {
   },
 };
 
-export default function MovieDetails() {
+const MovieDetails: FC = () => {
   const { id: paramsId } = useParams();
   const url = `https://api.themoviedb.org/3/movie/${paramsId}?language=en-US`;
   const { data: movieData, isLoading, error } = useGetMovieDetails(url);
@@ -141,4 +141,6 @@ export default function MovieDetails() {
       </Paper>
     </PageWrapper>
   );
-}
+};
+
+export default MovieDetails;

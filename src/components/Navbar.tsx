@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import {
   AppBar,
   Box,
@@ -102,7 +102,7 @@ const styles: StylesObject = {
   },
 };
 
-const Navbar = () => {
+const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const theme = useTheme();

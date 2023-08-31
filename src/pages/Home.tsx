@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import PageWrapper from "../components/PageWrapper";
 import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 
@@ -24,7 +24,7 @@ const styles: StylesObject = {
   },
 };
 
-export default function Home() {
+const Home: FC = () => {
   const [page, setPage] = useState(1);
   const [requestedQuery, setRequestedQuery] = useState("");
 
@@ -109,4 +109,6 @@ export default function Home() {
       </Stack>
     </PageWrapper>
   );
-}
+};
+
+export default Home;

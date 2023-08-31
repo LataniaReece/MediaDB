@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Alert,
   Box,
   Button,
   FormControl,
-  FormHelperText,
   InputAdornment,
   TextField,
 } from "@mui/material";
@@ -13,7 +12,7 @@ interface SearchMoviesProps {
   setRequestedQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SearchMovies({ setRequestedQuery }: SearchMoviesProps) {
+const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
   const [query, setQuery] = useState("");
   const [showHelperText, setShowHelperText] = useState(false);
 
@@ -53,6 +52,6 @@ function SearchMovies({ setRequestedQuery }: SearchMoviesProps) {
       </FormControl>
     </Box>
   );
-}
+};
 
 export default SearchMovies;
