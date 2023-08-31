@@ -1,14 +1,15 @@
 import { FC, useState } from "react";
 import PageWrapper from "../components/PageWrapper";
-import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
 import useGetMovies from "../hooks/apiHooks/useGetMovies";
 import useGetGenres from "../hooks/apiHooks/useGetGenres";
 import { StylesObject } from "../types/utility";
-import MovieItem from "../components/movies/MovieItem";
 import SearchMovies from "../components/movies/SearchMovies";
+import MovieList from "../components/movies/MovieList";
+import MoviePagination from "../components/movies/MoviePagination";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -16,11 +17,6 @@ const styles: StylesObject = {
     justifyContent: "space-between",
     alignItems: "center",
     mb: 2,
-  },
-  paginationContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
 };
 
@@ -59,17 +55,6 @@ const Home: FC = () => {
 
   const { results: movieDataResults, total_pages, total_results } = movieData;
 
-  const getGenres = (ids: number[]) => {
-    let genreNames: string[] = [];
-    ids.map((id) => {
-      const genre = genreData.genres.find((genre) => genre.id === id);
-      if (genre) {
-        genreNames.push(genre.name);
-      }
-    });
-    return genreNames.join(", ");
-  };
-
   return (
     <PageWrapper>
       <SearchMovies setRequestedQuery={setRequestedQuery} />
@@ -83,30 +68,12 @@ const Home: FC = () => {
           sx={{ fontStyle: "italic" }}
         >{`${total_results} movies`}</Typography>
       </Box>
-      {movieDataResults && movieDataResults.length > 0 && (
-        <Grid
-          container
-          columnSpacing={1}
-          rowSpacing={{ xs: 4, md: 3 }}
-          sx={styles.movieGridContainer}
-        >
-          {movieDataResults.map((movie) => {
-            const genres = getGenres(movie.genre_ids);
-            return <MovieItem key={movie.id} movie={movie} genres={genres} />;
-          })}
-        </Grid>
-      )}
-      <Stack spacing={2} sx={{ mt: 2 }}>
-        <Box sx={styles.paginationContainer}>
-          <Typography>Page: {page}</Typography>
-          <Pagination
-            // Although we have total_pages, api only allows pages up to 500
-            count={total_pages > 500 ? 500 : total_pages}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Box>
-      </Stack>
+      <MovieList movies={movieDataResults} genreData={genreData} />
+      <MoviePagination
+        totalPages={total_pages}
+        page={page}
+        handlePageChange={handlePageChange}
+      />
     </PageWrapper>
   );
 };
