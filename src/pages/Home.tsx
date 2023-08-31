@@ -14,9 +14,10 @@ import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 const styles: StylesObject = {
   headerContainer: {
     display: "flex",
+    flexDirection: { xs: "column", sm: "row" },
     justifyContent: "space-between",
     alignItems: "center",
-    mb: 2,
+    my: 2,
   },
 };
 

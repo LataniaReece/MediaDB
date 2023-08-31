@@ -22,6 +22,7 @@ export interface GetGenresResponse {
 }
 
 export interface GetMovieDetailsReponse {
+  id: number;
   genres: Genre[];
   overview: string;
   popularity: number;

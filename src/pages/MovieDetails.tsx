@@ -4,12 +4,15 @@ import PageWrapper from "../components/PageWrapper";
 import useGetMovieDetails from "../hooks/apiHooks/useGetMovieDetails";
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
-import { Box, Link, Paper, Typography } from "@mui/material";
+import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";
 import { StylesObject } from "../types/utility";
 import { Genre } from "../types/api";
 import { AppColors } from "../theme";
 import { format } from "date-fns";
 import placeholderImage from "../images/movieDetailsPlaceholder.jpg";
+import { useFavoriteMoviesContext } from "../contexts/FavoriteMoviesContext";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const styles: StylesObject = {
   container: {
@@ -17,7 +20,7 @@ const styles: StylesObject = {
     flexDirection: "column",
     alignItems: "center",
     minHeight: "100vh",
-    mt: -5,
+    mt: { xs: 0, sm: 2, md: -5 },
   },
   movieImg: {
     maxWidth: "100%",
@@ -45,6 +48,19 @@ const styles: StylesObject = {
     backgroundColor: AppColors.blueLighter,
     boxShadow: "0px 7px 29px 0px rgba(159, 165, 188, 0.9)",
     minWidth: "100%",
+  },
+  plotHeaderContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: { xs: "column", md: "row" },
+    mb: { xs: 2, md: 0 },
+  },
+  favoriteButton: {
+    backgroundColor: AppColors.red,
+    "&:hover": {
+      backgroundColor: AppColors.redDark,
+    },
   },
   plotTitle: {
     my: 2,
@@ -77,6 +93,14 @@ const MovieDetails: FC = () => {
       </PageWrapper>
     );
   }
+
+  const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
+    useFavoriteMoviesContext();
+
+  const isMovieFavorite = (id: number) =>
+    favoriteMovies.filter((movieId) => movieId === id).length > 0;
+
+  const isFavorite = isMovieFavorite(movieData.id);
 
   const {
     title,
@@ -117,9 +141,36 @@ const MovieDetails: FC = () => {
       <Paper sx={styles.contentPaper}>
         {overview && (
           <>
-            <Typography variant="h2" sx={styles.plotTitle}>
-              Plot Summary
-            </Typography>
+            <Box sx={styles.plotHeaderContainer}>
+              <Typography variant="h2" sx={styles.plotTitle}>
+                Plot Summary
+              </Typography>
+              {isFavorite ? (
+                <Tooltip title={"Click to remove from favorites"}>
+                  <Button
+                    variant="contained"
+                    aria-label="remove-favorite-movie"
+                    onClick={() => removeFavoriteMovie(movieData.id)}
+                    startIcon={<FavoriteIcon />}
+                    sx={styles.favoriteButton}
+                  >
+                    In Favorites
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title={"Click to add to favorites"}>
+                  <Button
+                    variant="contained"
+                    aria-label="add-favorite-movie"
+                    onClick={() => addFavoriteMovie(movieData.id)}
+                    startIcon={<FavoriteBorderIcon />}
+                    sx={styles.favoriteButton}
+                  >
+                    Add to Favorites
+                  </Button>
+                </Tooltip>
+              )}
+            </Box>
             <Typography sx={styles.plotOverview}>{overview}</Typography>
           </>
         )}

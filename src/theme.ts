@@ -6,8 +6,8 @@ const AppColors = {
   blueLighter: "#E7E9EF",
   blueDark: "#2A2D3C",
 
-  // red: "#FF7477",
-  red: "#FF474A",
+  red: "#B71C1C",
+  redDark: "#8D1616",
 };
 
 const theme = createTheme({
