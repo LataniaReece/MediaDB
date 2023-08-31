@@ -1,8 +1,12 @@
 import { FC } from "react";
-import { Box, Grid, Link, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Link, Typography } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { StylesObject } from "../../types/utility";
 import { Movie } from "../../types/api";
 import placeholder from "../../images/movieItemPlaceholder.jpg";
+import { AppColors } from "../../theme";
+import { useFavoriteMoviesContext } from "../../hooks/useFavoriteMoviesContext";
 
 interface MovieItemProps {
   movie: Movie;
@@ -11,6 +15,7 @@ interface MovieItemProps {
 
 const styles: StylesObject = {
   movieGridItem: {
+    position: "relative",
     transition: "transform 0.3s, border 0.3s",
     "&:hover": {
       transform: "scale(1.05)",
@@ -38,6 +43,14 @@ const styles: StylesObject = {
 };
 
 const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
+  const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
+    useFavoriteMoviesContext();
+
+  const isMovieFavorite = (id: number) =>
+    favoriteMovies.filter((movieId) => movieId === id).length > 0;
+
+  const isFavorite = isMovieFavorite(movie.id);
+
   return (
     <Grid
       key={movie.id}
@@ -62,6 +75,41 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
         <Typography sx={styles.movieTitle}>{movie.title}</Typography>
         <Typography sx={styles.movieGenres}>{genres}</Typography>
       </Link>
+      {isFavorite ? (
+        <IconButton
+          aria-label="remove-favorite-movie"
+          onClick={() => removeFavoriteMovie(movie.id)}
+          sx={{
+            position: "absolute",
+            top: "25px",
+            color: AppColors.red,
+            transformOrigin: "center",
+            transition: "transform 0.3s",
+            "&:hover": {
+              transform: "scale(1.1)",
+            },
+          }}
+        >
+          <FavoriteIcon />
+        </IconButton>
+      ) : (
+        <IconButton
+          aria-label="add-favorite-movie"
+          onClick={() => addFavoriteMovie(movie.id)}
+          sx={{
+            position: "absolute",
+            top: "25px",
+            color: AppColors.red,
+            transformOrigin: "center",
+            transition: "transform 0.3s",
+            "&:hover": {
+              transform: "scale(1.1)",
+            },
+          }}
+        >
+          <FavoriteBorderIcon />
+        </IconButton>
+      )}
     </Grid>
   );
 };

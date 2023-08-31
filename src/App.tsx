@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { AppContextProvider } from "./context/AppContext";
+import { FavoriteMoviesProvider } from "./context/FavoriteMoviesContext";
 import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 import { theme } from "./theme";
@@ -11,7 +11,7 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppContextProvider>
+      <FavoriteMoviesProvider>
         <Router>
           <Box
             sx={{
@@ -26,7 +26,7 @@ const App: FC = () => {
             </Box>
           </Box>
         </Router>
-      </AppContextProvider>
+      </FavoriteMoviesProvider>
     </ThemeProvider>
   );
 };
