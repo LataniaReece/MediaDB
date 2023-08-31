@@ -5,11 +5,11 @@ import { Box, Typography } from "@mui/material";
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
 import useGetMovies from "../hooks/apiHooks/useGetMovies";
-import useGetGenres from "../hooks/apiHooks/useGetGenres";
 import { StylesObject } from "../types/utility";
 import SearchMovies from "../components/movies/SearchMovies";
 import MovieList from "../components/movies/MovieList";
 import MoviePagination from "../components/movies/MoviePagination";
+import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -27,7 +27,6 @@ const Home: FC = () => {
   const movieListUrl = requestedQuery
     ? `https://api.themoviedb.org/3/search/movie?query=${requestedQuery}&language=en-US&page=${page}`
     : `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
-  const genreListUrl = `https://api.themoviedb.org/3/genre/movie/list`;
 
   const {
     data: movieData,
@@ -38,7 +37,7 @@ const Home: FC = () => {
     data: genreData,
     isLoading: genreDataIsLoading,
     error: genreDataError,
-  } = useGetGenres(genreListUrl);
+  } = useMovieGenreContext();
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -68,7 +67,7 @@ const Home: FC = () => {
           sx={{ fontStyle: "italic" }}
         >{`${total_results} movies`}</Typography>
       </Box>
-      <MovieList movies={movieDataResults} genreData={genreData} />
+      <MovieList movies={movieDataResults} />
       <MoviePagination
         totalPages={total_pages}
         page={page}

@@ -1,5 +1,11 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { FavoriteMoviesContextType } from "../types/FavoriteMoviesContext";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from "react";
+import { FavoriteMoviesContextType } from "../types/contexts";
 
 export const FavoriteMoviesContext = createContext<
   FavoriteMoviesContextType | undefined
@@ -41,4 +47,14 @@ export const FavoriteMoviesProvider: React.FC<FavoriteMoviesProviderProps> = ({
       {children}
     </FavoriteMoviesContext.Provider>
   );
+};
+
+export const useFavoriteMoviesContext = (): FavoriteMoviesContextType => {
+  const context = useContext(FavoriteMoviesContext);
+  if (!context) {
+    throw new Error(
+      "useFavoriteMoviesContext must be used within a FavoriteMoviesProvider"
+    );
+  }
+  return context;
 };

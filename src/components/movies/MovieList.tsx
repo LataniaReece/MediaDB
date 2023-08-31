@@ -1,18 +1,20 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
-import { GetGenresResponse, Movie } from "../../types/api";
+import { Movie } from "../../types/api";
 import MovieItem from "./MovieItem";
+import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
 
 interface MovieListProps {
   movies: Movie[];
-  genreData: GetGenresResponse;
 }
 
-const MovieList: FC<MovieListProps> = ({ movies, genreData }) => {
-  const getGenres = (ids: number[]) => {
+const MovieList: FC<MovieListProps> = ({ movies }) => {
+  const { data: genreData } = useMovieGenreContext();
+
+  const getMovieItemGenres = (ids: number[]) => {
     let genreNames: string[] = [];
     ids.map((id) => {
-      const genre = genreData.genres.find((genre) => genre.id === id);
+      const genre = genreData?.find((genre) => genre.id === id);
       if (genre) {
         genreNames.push(genre.name);
       }
@@ -22,10 +24,12 @@ const MovieList: FC<MovieListProps> = ({ movies, genreData }) => {
 
   return (
     movies &&
-    movies.length > 0 && (
+    movies.length > 0 &&
+    genreData &&
+    genreData.length > 0 && (
       <Grid container columnSpacing={1} rowSpacing={{ xs: 4, md: 3 }}>
         {movies.map((movie) => {
-          const genres = getGenres(movie.genre_ids);
+          const genres = getMovieItemGenres(movie.genre_ids);
           return <MovieItem key={movie.id} movie={movie} genres={genres} />;
         })}
       </Grid>

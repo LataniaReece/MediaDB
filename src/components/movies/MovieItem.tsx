@@ -6,7 +6,7 @@ import { StylesObject } from "../../types/utility";
 import { Movie } from "../../types/api";
 import placeholder from "../../images/movieItemPlaceholder.jpg";
 import { AppColors } from "../../theme";
-import { useFavoriteMoviesContext } from "../../hooks/useFavoriteMoviesContext";
+import { useFavoriteMoviesContext } from "../../contexts/FavoriteMoviesContext";
 
 interface MovieItemProps {
   movie: Movie;
