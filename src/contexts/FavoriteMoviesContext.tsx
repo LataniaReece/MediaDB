@@ -6,6 +6,7 @@ import React, {
   useContext,
 } from "react";
 import { FavoriteMoviesContextType } from "../types/contexts";
+import { Movie } from "../types/api";
 
 export const FavoriteMoviesContext = createContext<
   FavoriteMoviesContextType | undefined
@@ -18,7 +19,7 @@ interface FavoriteMoviesProviderProps {
 export const FavoriteMoviesProvider: React.FC<FavoriteMoviesProviderProps> = ({
   children,
 }) => {
-  const [favoriteMovies, setFavoriteMovies] = useState<number[]>(
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>(
     JSON.parse(localStorage.getItem("favoriteMovies") || "[]")
   );
 
@@ -26,13 +27,13 @@ export const FavoriteMoviesProvider: React.FC<FavoriteMoviesProviderProps> = ({
     localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
   }, [favoriteMovies]);
 
-  const addFavoriteMovie = (id: number) => {
-    setFavoriteMovies((prevMovieIds) => [...prevMovieIds, id]);
+  const addFavoriteMovie = (movie: Movie) => {
+    setFavoriteMovies((prevFavMovies) => [...prevFavMovies, movie]);
   };
 
-  const removeFavoriteMovie = (id: number) => {
-    setFavoriteMovies((prevMovieIds) =>
-      prevMovieIds.filter((movieId) => id !== movieId)
+  const removeFavoriteMovie = (movie: Movie) => {
+    setFavoriteMovies((prevFavMovies) =>
+      prevFavMovies.filter((prevFavMovie) => prevFavMovie.id !== movie.id)
     );
   };
 

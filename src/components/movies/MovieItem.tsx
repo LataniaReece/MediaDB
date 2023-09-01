@@ -46,10 +46,10 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
   const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
     useFavoriteMoviesContext();
 
-  const isMovieFavorite = (id: number) =>
-    favoriteMovies.filter((movieId) => movieId === id).length > 0;
+  const isMovieFavorite = (movie: Movie) =>
+    favoriteMovies.filter((favMovie) => favMovie.id === movie.id).length > 0;
 
-  const isFavorite = isMovieFavorite(movie.id);
+  const isFavorite = isMovieFavorite(movie);
 
   return (
     <Grid
@@ -78,7 +78,7 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
       {isFavorite ? (
         <IconButton
           aria-label="remove-favorite-movie"
-          onClick={() => removeFavoriteMovie(movie.id)}
+          onClick={() => removeFavoriteMovie(movie)}
           sx={{
             position: "absolute",
             top: "25px",
@@ -95,7 +95,7 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
       ) : (
         <IconButton
           aria-label="add-favorite-movie"
-          onClick={() => addFavoriteMovie(movie.id)}
+          onClick={() => addFavoriteMovie(movie)}
           sx={{
             position: "absolute",
             top: "25px",

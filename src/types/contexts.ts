@@ -1,9 +1,9 @@
-import { ErrorResponse, Genre } from "./api";
+import { ErrorResponse, Genre, Movie } from "./api";
 
 export interface FavoriteMoviesContextType {
-  favoriteMovies: number[];
-  addFavoriteMovie: (id: number) => void;
-  removeFavoriteMovie: (id: number) => void;
+  favoriteMovies: Movie[];
+  addFavoriteMovie: (movie: Movie) => void;
+  removeFavoriteMovie: (movie: Movie) => void;
 }
 
 export interface MovieGenreContextType {

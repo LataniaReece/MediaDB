@@ -6,7 +6,7 @@ import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
 import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";
 import { StylesObject } from "../types/utility";
-import { Genre } from "../types/api";
+import { Genre, Movie } from "../types/api";
 import { AppColors } from "../theme";
 import { format } from "date-fns";
 import placeholderImage from "../images/movieDetailsPlaceholder.jpg";
@@ -97,10 +97,10 @@ const MovieDetails: FC = () => {
   const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
     useFavoriteMoviesContext();
 
-  const isMovieFavorite = (id: number) =>
-    favoriteMovies.filter((movieId) => movieId === id).length > 0;
+  const isMovieFavorite = (movie: Movie) =>
+    favoriteMovies.filter((favMovie) => favMovie.id === movie.id).length > 0;
 
-  const isFavorite = isMovieFavorite(movieData.id);
+  const isFavorite = isMovieFavorite(movieData);
 
   const {
     title,
@@ -112,7 +112,7 @@ const MovieDetails: FC = () => {
     imdb_id,
   } = movieData;
 
-  const formattedGenres = genres.map((genre: Genre) => genre.name).join(", ");
+  const formattedGenres = genres?.map((genre: Genre) => genre.name).join(", ");
 
   return (
     <PageWrapper sx={styles.container}>
@@ -150,7 +150,7 @@ const MovieDetails: FC = () => {
                   <Button
                     variant="contained"
                     aria-label="remove-favorite-movie"
-                    onClick={() => removeFavoriteMovie(movieData.id)}
+                    onClick={() => removeFavoriteMovie(movieData)}
                     startIcon={<FavoriteIcon />}
                     sx={styles.favoriteButton}
                   >
@@ -162,7 +162,7 @@ const MovieDetails: FC = () => {
                   <Button
                     variant="contained"
                     aria-label="add-favorite-movie"
-                    onClick={() => addFavoriteMovie(movieData.id)}
+                    onClick={() => addFavoriteMovie(movieData)}
                     startIcon={<FavoriteBorderIcon />}
                     sx={styles.favoriteButton}
                   >

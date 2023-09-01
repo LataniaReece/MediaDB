@@ -1,8 +1,8 @@
 import useApiHookBase from "./useApiHookBase";
-import { GetMovieDetailsReponse } from "../../types/api";
+import { Movie } from "../../types/api";
 
 const useGetMovieDetails = (url: string) => {
-  return useApiHookBase<GetMovieDetailsReponse>(url);
+  return useApiHookBase<Movie>(url);
 };
 
 export default useGetMovieDetails;

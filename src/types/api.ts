@@ -4,6 +4,12 @@ export interface Movie {
   overview: string;
   poster_path: string;
   genre_ids: number[];
+  genres?: Genre[];
+  popularity?: number;
+  backdrop_path?: string;
+  release_date?: string;
+  tagline?: string;
+  imdb_id?: string;
 }
 export interface Genre {
   id: number;
@@ -19,18 +25,6 @@ export interface GetMoviesResponse {
 
 export interface GetGenresResponse {
   genres: Genre[];
-}
-
-export interface GetMovieDetailsReponse {
-  id: number;
-  genres: Genre[];
-  overview: string;
-  popularity: number;
-  backdrop_path: string;
-  release_date: string;
-  title: string;
-  tagline: string;
-  imdb_id: string;
 }
 
 export interface Genre {
