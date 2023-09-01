@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
-import useGetMovieDetails from "../hooks/apiHooks/useGetMovieDetails";
+import { useGetMovieDetails } from "../hooks/apiHooks/movieApiHooks";
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
 import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";

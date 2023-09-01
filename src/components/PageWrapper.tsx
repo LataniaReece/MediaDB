@@ -10,7 +10,6 @@ const PageWrapper: FC<{
       component="main"
       sx={{
         flexGrow: 1,
-        // pt: { xs: 8, sm: 0 },
         pb: 4,
         px: { xs: 2, md: 8 },
         ...props.sx,

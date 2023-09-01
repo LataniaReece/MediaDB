@@ -2,14 +2,9 @@ import { FC, useState } from "react";
 import PageWrapper from "../components/PageWrapper";
 import { Box, Typography } from "@mui/material";
 
-// import PageLoader from "../components/PageLoader";
-// import PageError from "../components/PageError";
-// import useGetMovies from "../hooks/apiHooks/useGetMovies";
 import { StylesObject } from "../types/utility";
-// import SearchMovies from "../components/movies/SearchMovies";
 import MovieList from "../components/movies/MovieList";
 import MoviePagination from "../components/movies/MoviePagination";
-// import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 import { useFavoriteMoviesContext } from "../contexts/FavoriteMoviesContext";
 
 const styles: StylesObject = {

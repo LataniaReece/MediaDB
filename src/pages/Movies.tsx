@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
-import useGetMovies from "../hooks/apiHooks/useGetMovies";
+import { useGetMovies } from "../hooks/apiHooks/movieApiHooks";
 import { StylesObject } from "../types/utility";
 import SearchMovies from "../components/movies/SearchMovies";
 import MovieList from "../components/movies/MovieList";

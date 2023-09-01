@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ErrorResponse, Genre, GetGenresResponse } from "../../types/api";
+import {
+  ErrorResponse,
+  Genre,
+  GetGenresResponse,
+  GetMoviesResponse,
+  Movie,
+} from "../../types/api";
+import useApiHookBase from "./useApiHookBase";
 
 const api_key = import.meta.env.VITE_API_KEY;
 
+// Get genres hook
 const useGetGenres = () => {
   const [data, setData] = useState<Genre[]>(
     JSON.parse(localStorage.getItem("genreData") || "[]")
@@ -53,4 +61,14 @@ const useGetGenres = () => {
   return { data, isLoading, error };
 };
 
-export default useGetGenres;
+// Get movie details hook
+const useGetMovieDetails = (url: string) => {
+  return useApiHookBase<Movie>(url);
+};
+
+// Get movies hook
+const useGetMovies = (url: string) => {
+  return useApiHookBase<GetMoviesResponse>(url);
+};
+
+export { useGetGenres, useGetMovies, useGetMovieDetails };
