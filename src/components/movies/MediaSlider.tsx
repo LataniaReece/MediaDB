@@ -26,7 +26,7 @@ const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 5,
+      items: 6,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -34,11 +34,11 @@ const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 5,
+      items: 4,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 5,
+      items: 2,
     },
   };
 

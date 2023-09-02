@@ -21,6 +21,7 @@ import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import { Link } from "react-router-dom";
 import TvIcon from "@mui/icons-material/Tv";
 import MovieCreationIcon from "@mui/icons-material/MovieCreation";
+
 import { AppColors } from "../theme";
 import { StylesObject } from "../types/utility";
 

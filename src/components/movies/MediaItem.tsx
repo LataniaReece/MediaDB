@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Box, Grid, IconButton, Link, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import { StylesObject } from "../../types/utility";
 import { Movie } from "../../types/api";
 import placeholder from "../../images/movieItemPlaceholder.jpg";

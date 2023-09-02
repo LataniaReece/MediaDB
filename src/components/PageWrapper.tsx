@@ -9,10 +9,10 @@ const PageWrapper: FC<{
     <Box
       component="main"
       sx={{
-        // flexGrow: 1,
         pb: 4,
         px: { xs: 2, md: 8 },
-        ml: 30,
+        ml: { xs: 0, md: 30 },
+        mt: { xs: 10, md: 0 },
         ...props.sx,
       }}
     >
