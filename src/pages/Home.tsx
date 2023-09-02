@@ -1,15 +1,14 @@
 import { FC } from "react";
 import PageWrapper from "../components/PageWrapper";
 import { Box, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
+import MediaCarousel from "../components/movies/MediaSlider";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { StylesObject } from "../types/utility";
-import MovieList from "../components/movies/MediaGridList";
-import { Link } from "react-router-dom";
-import { AppColors } from "../theme";
-import MediaCarousel from "../components/movies/MediaSlider";
+import { Movie, Tv } from "../types/api";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -22,7 +21,6 @@ const styles: StylesObject = {
     color: "#fff",
   },
   button: {
-    // backgroundColor: AppColors.blueLight,
     textTransform: "capitalize",
     color: "#000",
   },
@@ -54,8 +52,17 @@ const Home: FC = () => {
   const { results: movieDataResults } = movieData;
   const { results: tvDataResults } = tvData;
 
-  const moviesToShow = movieDataResults.slice(0, 12);
-  const tvToShow = tvDataResults.slice(0, 12);
+  // const moviesToShow = movieDataResults.slice(0, 12);
+  const moviesToShow = movieDataResults.slice(0, 12).map((movie) => ({
+    ...movie,
+    type: "movie",
+  })) as Movie[];
+
+  // const tvToShow = tvDataResults.slice(0, 12);
+  const tvToShow = tvDataResults.slice(0, 12).map((tvShow) => ({
+    ...tvShow,
+    type: "show",
+  })) as Tv[];
 
   return (
     <PageWrapper sx={{}}>
@@ -66,59 +73,28 @@ const Home: FC = () => {
         <Button
           component={Link}
           variant="contained"
-          to="/movies"
+          to="/media/movies"
           sx={styles.button}
         >
           See All Movies
         </Button>
       </Box>
       <MediaCarousel media={moviesToShow} />
-      <Box sx={styles.headerContainer}>
-        <Typography variant="h1" sx={{ ...styles.header, mt: 2 }}>
+      <Box sx={{ ...styles.headerContainer, mt: 5 }}>
+        <Typography variant="h1" sx={styles.header}>
           Tv Shows
         </Typography>
         <Button
           component={Link}
           variant="contained"
-          to="/shows"
+          to="/media/shows"
           sx={styles.button}
         >
           See All Shows
         </Button>
       </Box>
-      {/* <MediaCarousel media={tvToShow} /> */}
+      <MediaCarousel media={tvToShow} />
     </PageWrapper>
-    // <PageWrapper>
-    // <Box sx={styles.headerContainer}>
-    //   <Typography variant="h1" sx={styles.header}>
-    //     Movies
-    //   </Typography>
-    //   <Button
-    //     component={Link}
-    //     variant="contained"
-    //     to="/movies"
-    //     sx={styles.button}
-    //   >
-    //     See All Movies
-    //   </Button>
-    // </Box>
-    //   {/* <MovieList movies={moviesToShow} /> */}
-    //   {/* <MovieItemCarousel movies={moviesToShow} /> */}
-    // <Box sx={styles.headerContainer}>
-    //   <Typography variant="h1" sx={{ ...styles.header, mt: 2 }}>
-    //     Tv Shows
-    //   </Typography>
-    //   <Button
-    //     component={Link}
-    //     variant="contained"
-    //     to="/shows"
-    //     sx={styles.button}
-    //   >
-    //     See All Shows
-    //   </Button>
-    // </Box>
-    //   {/* <MovieList movies={tvToShow} /> */}
-    // </PageWrapper>
   );
 };
 

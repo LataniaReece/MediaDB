@@ -12,15 +12,17 @@ interface Media {
 export interface Movie extends Media {
   release_date?: string;
   imdb_id?: string;
+  type: "movie";
 }
 
 export interface Tv extends Media {
+  name?: string;
   first_air_date?: string;
   last_air_date?: string;
   number_of_episodes?: number;
   number_of_seasons?: number;
   status?: string;
-  type?: string;
+  type: "show";
 }
 
 export interface Genre {

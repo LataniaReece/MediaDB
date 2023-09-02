@@ -4,13 +4,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { StylesObject } from "../../types/utility";
-import { Movie } from "../../types/api";
+import { Movie, Tv } from "../../types/api";
 import placeholder from "../../images/movieItemPlaceholder.jpg";
 import { AppColors } from "../../theme";
 import { useFavoriteMoviesContext } from "../../contexts/FavoriteMoviesContext";
 
 interface MediaItemProps {
-  movie: Movie;
+  media: Movie | Tv;
   genres: string;
   itemType: "gridItem" | "sliderItem";
 }
@@ -19,12 +19,12 @@ const styles: StylesObject = {
   mediaItem: {
     position: "relative",
     pr: 2,
-    transition: "transform 0.3s, border 0.3s",
+    transition: "all 0.3s",
     "&:hover": {
-      transform: "scale(1.05)",
+      opacity: 0.6,
     },
   },
-  movieImg: {
+  mediaImg: {
     width: "100%",
     maxWidth: "100%",
     boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
@@ -32,14 +32,14 @@ const styles: StylesObject = {
       boxShadow: "rgba(100, 100, 111, 0.6) 0px 7px 29px 0px",
     },
   },
-  movieLink: {
+  mediaLink: {
     textDecoration: "none",
   },
-  movieTitle: {
+  mediaTitle: {
     fontWeight: "bold",
     fontSize: 20,
   },
-  movieGenres: {
+  mediaGenres: {
     fontStyle: "italic",
     opacity: "80%",
   },
@@ -55,32 +55,46 @@ const styles: StylesObject = {
   },
 };
 
-const MediaItem: FC<MediaItemProps> = ({ movie, genres, itemType }) => {
-  const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
-    useFavoriteMoviesContext();
+const isMovie = (media: Movie | Tv): media is Movie => {
+  return (media as Movie).title !== undefined;
+};
 
-  const isMovieFavorite = (movie: Movie) =>
-    favoriteMovies.filter((favMovie) => favMovie.id === movie.id).length > 0;
+const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
+  // const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
+  //   useFavoriteMoviesContext();
 
-  const isFavorite = isMovieFavorite(movie);
+  // const isMovieFavorite = (media: Movie | Tv) =>
+  //   favoriteMovies.filter((favMovie) => favMovie.id === movie.id).length > 0;
+
+  // const isFavorite = isMovieFavorite(movie);
 
   const itemContent = (
     <>
-      <Link href={`/movies/${movie.id}`} sx={styles.movieLink}>
+      <Link
+        href={
+          media.type === "movie"
+            ? `/media/movies/${media.id}`
+            : `/media/shows/${media.id}`
+        }
+        sx={styles.mediaLink}
+      >
         <Box
           component="img"
           src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+            media.poster_path
+              ? `https://image.tmdb.org/t/p/original${media.poster_path}`
               : placeholder
           }
-          alt={movie.title}
-          sx={styles.movieImg}
+          alt={media.title}
+          sx={styles.mediaImg}
         />
-        <Typography sx={styles.movieTitle}>{movie.title}</Typography>
-        <Typography sx={styles.movieGenres}>{genres}</Typography>
+
+        <Typography sx={styles.mediatitle}>
+          {isMovie(media) ? media.title : media.name}
+        </Typography>
+        <Typography sx={styles.mediaGenre}>{genres}</Typography>
       </Link>
-      {isFavorite ? (
+      {/* {isFavorite ? (
         <IconButton
           aria-label="remove-favorite-movie"
           onClick={() => removeFavoriteMovie(movie)}
@@ -102,7 +116,7 @@ const MediaItem: FC<MediaItemProps> = ({ movie, genres, itemType }) => {
         >
           <FavoriteBorderIcon />
         </IconButton>
-      )}
+      )} */}
     </>
   );
 

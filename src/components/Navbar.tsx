@@ -210,9 +210,9 @@ const NavbarLinksSection = ({
   const pages = [
     {
       name: "TV Shows",
-      href: "/shows",
+      href: "/media/shows",
     },
-    { name: "Movies", href: "/movies" },
+    { name: "Movies", href: "/media/movies" },
   ];
 
   return pages.map((page) =>

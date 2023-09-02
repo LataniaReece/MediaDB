@@ -33,19 +33,30 @@ const useGetGenres = () => {
       }
 
       try {
-        const response: AxiosResponse<GetGenresResponse> = await axios.get(
-          `https://api.themoviedb.org/3/genre/movie/list`,
-          {
+        const movieGenreResponse: AxiosResponse<GetGenresResponse> =
+          await axios.get(`https://api.themoviedb.org/3/genre/movie/list`, {
             params: {
               api_key,
             },
-          }
-        );
-        setData(response.data.genres);
-        setIsLoading(false);
+          });
+
+        const tvGenreResponse: AxiosResponse<GetGenresResponse> =
+          await axios.get(`https://api.themoviedb.org/3/genre/tv/list`, {
+            params: {
+              api_key,
+            },
+          });
+
+        const combinedData = [
+          ...movieGenreResponse.data.genres,
+          ...tvGenreResponse.data.genres,
+        ];
 
         // Save data to localStorage
-        localStorage.setItem("genreData", JSON.stringify(response.data.genres));
+        localStorage.setItem("genreData", JSON.stringify(combinedData));
+
+        setData(combinedData);
+        setIsLoading(false);
       } catch (error: unknown) {
         if (error instanceof AxiosError && error.response) {
           setError({ message: error.response.data.message });

@@ -10,20 +10,15 @@ import {
 import { StylesObject } from "../../types/utility";
 import { AppColors } from "../../theme";
 
-interface SearchMoviesProps {
+interface SearchMediaProps {
   setRequestedQuery: React.Dispatch<React.SetStateAction<string>>;
+  type: string | undefined;
 }
 
 const styles: StylesObject = {
-  // searchField: {
-  //   backgroundColor: AppColors.bgColor,
-  //   border: "1px #fff solid",
-  //   color: "#fff",
-  // },
   searchField: {
     backgroundColor: AppColors.bgColor,
     "& .MuiInputBase-root": {
-      border: "1px solid #fff",
       color: "#fff",
     },
     "& .MuiOutlinedInput-notchedOutline": {
@@ -31,17 +26,19 @@ const styles: StylesObject = {
     },
     "& .MuiInputLabel-root": {
       color: "#fff",
-      // transform: "none", // Disable label animation on input focus
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "#fff",
     },
     "& .MuiOutlinedInput-root": {
       "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#fff", // Customize the border color on focus
+        borderColor: "#fff",
       },
     },
   },
 };
 
-const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
+const SearchMedia: FC<SearchMediaProps> = ({ setRequestedQuery, type }) => {
   const [query, setQuery] = useState("");
   const [showHelperText, setShowHelperText] = useState(false);
 
@@ -54,11 +51,13 @@ const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
       setShowHelperText(true);
     }
   };
+
+  console.log(type);
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <FormControl sx={{ width: "100%" }}>
         <TextField
-          label="Search Movies"
+          label={type === "movies" ? "Search Movies" : "Search Shows"}
           variant="outlined"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -84,4 +83,4 @@ const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
   );
 };
 
-export default SearchMovies;
+export default SearchMedia;
