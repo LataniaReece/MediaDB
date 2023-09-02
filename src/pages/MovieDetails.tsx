@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
-import { useGetMovieDetails } from "../hooks/apiHooks/movieApiHooks";
+import { useGetMediaDetails } from "../hooks/apiHooks/apiHooks";
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
 import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";
 import { StylesObject } from "../types/utility";
-import { Genre, Movie } from "../types/api";
+import { ErrorResponse, Genre, Movie } from "../types/api";
 import { AppColors } from "../theme";
 import { format } from "date-fns";
 import placeholderImage from "../images/movieDetailsPlaceholder.jpg";
@@ -45,7 +45,7 @@ const styles: StylesObject = {
     pb: 4,
     px: 3,
     borderRadius: "10px",
-    backgroundColor: AppColors.blueLighter,
+    backgroundColor: AppColors.blueLight,
     boxShadow: "0px 7px 29px 0px rgba(159, 165, 188, 0.9)",
     minWidth: "100%",
   },
@@ -76,7 +76,15 @@ const styles: StylesObject = {
 const MovieDetails: FC = () => {
   const { id: paramsId } = useParams();
   const url = `https://api.themoviedb.org/3/movie/${paramsId}?language=en-US`;
-  const { data: movieData, isLoading, error } = useGetMovieDetails(url);
+  const {
+    data: movieData,
+    isLoading,
+    error,
+  } = useGetMediaDetails(url) as {
+    data: Movie;
+    isLoading: boolean;
+    error: ErrorResponse | null;
+  };
 
   if (isLoading) {
     return (

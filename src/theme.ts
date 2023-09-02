@@ -1,10 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 
 const AppColors = {
-  blue: "#454B63",
-  blueLight: "#9FA5BC",
-  blueLighter: "#E7E9EF",
-  blueDark: "#2A2D3C",
+  bgColor: "#070A16",
+
+  blue: "#669BE1",
+  blueDark: "#081736",
+  blueLight: "#BCD3F2",
+
+  orange: "#F06543",
 
   red: "#B71C1C",
   redDark: "#8D1616",
@@ -12,18 +15,24 @@ const AppColors = {
 
 const theme = createTheme({
   palette: {
+    background: {
+      default: AppColors.bgColor,
+    },
+
     primary: {
       main: AppColors.blue,
-      dark: AppColors.blueDark,
       light: AppColors.blueLight,
+      dark: AppColors.blueDark,
     },
   },
   typography: {
     allVariants: {
       fontFamily: "Roboto",
+      color: "#fff",
     },
     h1: {
-      fontSize: 36,
+      fontSize: 28,
+      fontWeight: "bold",
     },
     h2: {
       fontSize: 30,
@@ -35,28 +44,27 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.variant === "text" && {
-            textTransform: "capitalize",
-            fontSize: 16,
-            "&:hover": {
-              backgroundColor: AppColors.blueLight,
-              color: "black",
-            },
-          }),
-        }),
+        root: {
+          "&:hover": {
+            backgroundColor: AppColors.orange,
+          },
+        },
       },
     },
     MuiPagination: {
       styleOverrides: {
         ul: {
-          "& .Mui-selected": {
-            backgroundColor: AppColors.blueLight,
+          "& .MuiPaginationItem-ellipsis": {
+            color: AppColors.blue,
           },
           "& .MuiButtonBase-root": {
+            backgroundColor: AppColors.blueLight,
             "&:hover": {
-              backgroundColor: AppColors.blueLight,
+              backgroundColor: AppColors.blue,
             },
+          },
+          "& .Mui-selected": {
+            backgroundColor: `${AppColors.blue} !important`,
           },
         },
       },

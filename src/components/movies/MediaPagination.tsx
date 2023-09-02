@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { StylesObject } from "../../types/utility";
 
-interface PaginationProps {
+interface MediaPaginationProps {
   totalPages: number;
   page: number;
   handlePageChange: (_: React.ChangeEvent<unknown>, value: number) => void;
@@ -16,7 +16,7 @@ const styles: StylesObject = {
   },
 };
 
-const MoviePagination: FC<PaginationProps> = ({
+const MediaPagination: FC<MediaPaginationProps> = ({
   totalPages,
   page,
   handlePageChange,
@@ -36,4 +36,4 @@ const MoviePagination: FC<PaginationProps> = ({
   );
 };
 
-export default MoviePagination;
+export default MediaPagination;

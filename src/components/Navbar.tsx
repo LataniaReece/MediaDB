@@ -28,13 +28,13 @@ const DRAWER_WIDTH = 240;
 
 const styles: StylesObject = {
   navbar: {
-    backgroundColor: AppColors.blue,
+    backgroundColor: AppColors.blueDark,
     width: { xs: "100%", md: `calc(100% - ${DRAWER_WIDTH}px)` },
     ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
   },
   navbarContentContainer: {
     display: { xs: "flex", md: "none" },
-    backgroundColor: AppColors.blue,
+    backgroundColor: AppColors.blueDark,
   },
   logo: {
     color: "white",
@@ -42,7 +42,7 @@ const styles: StylesObject = {
     fontSize: 25,
     whiteSpace: "nowrap",
     borderRadius: 0,
-    backgroundColor: AppColors.blue,
+    backgroundColor: AppColors.blueDark,
     pt: { xs: 8, md: 2 },
     pl: 2,
   },
@@ -64,7 +64,7 @@ const styles: StylesObject = {
     flexDirection: "column",
     justifyContent: "space-between",
     px: 2,
-    backgroundColor: AppColors.blue,
+    backgroundColor: AppColors.blueDark,
     height: "100%",
   },
   sectionHeader: {
@@ -89,6 +89,7 @@ const styles: StylesObject = {
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: DRAWER_WIDTH,
+      backgroundColor: AppColors.blueDark,
     },
   },
   desktopDrawer: {
@@ -98,6 +99,7 @@ const styles: StylesObject = {
     "& .MuiDrawer-paper": {
       width: DRAWER_WIDTH,
       boxSizing: "border-box",
+      backgroundColor: AppColors.blueDark,
     },
   },
 };
@@ -120,7 +122,7 @@ const Navbar: FC = () => {
     <>
       <ArrowBackIos onClick={handleDrawerToggle} sx={styles.closeIcon} />
       <Typography component={Link} to="/" sx={styles.logo}>
-        Movie App
+        Stream App
       </Typography>
       <Box sx={styles.listWrapper}>
         <Stack direction="column">
@@ -231,7 +233,11 @@ const NavbarLinksSection = ({
         sx={styles.desktopNavLink}
       >
         <ListItemIcon>
-          {page.name === "TV Shows" ? <TvIcon /> : <MovieCreationIcon />}
+          {page.name === "TV Shows" ? (
+            <TvIcon sx={{ color: "white" }} />
+          ) : (
+            <MovieCreationIcon sx={{ color: "white" }} />
+          )}
         </ListItemIcon>
         <ListItemText primary={page.name} />
       </ListItem>

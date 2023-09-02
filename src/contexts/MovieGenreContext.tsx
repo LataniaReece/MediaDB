@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext } from "react";
 import { MovieGenreContextType } from "../types/contexts";
-import { useGetGenres } from "../hooks/apiHooks/movieApiHooks";
+import { useGetGenres } from "../hooks/apiHooks/apiHooks";
 
 export const MovieGenreContext = createContext<
   MovieGenreContextType | undefined

@@ -1,24 +1,36 @@
-export interface Movie {
+interface Media {
   id: number;
   title: string;
   overview: string;
   poster_path: string;
+  backdrop_path?: string;
+  tagline?: string;
   genre_ids: number[];
   genres?: Genre[];
-  popularity?: number;
-  backdrop_path?: string;
+}
+
+export interface Movie extends Media {
   release_date?: string;
-  tagline?: string;
   imdb_id?: string;
 }
+
+export interface Tv extends Media {
+  first_air_date?: string;
+  last_air_date?: string;
+  number_of_episodes?: number;
+  number_of_seasons?: number;
+  status?: string;
+  type?: string;
+}
+
 export interface Genre {
   id: number;
   name: string;
 }
 
-export interface GetMoviesResponse {
+export interface GetMediaResponse {
   page: number;
-  results: Movie[];
+  results: Movie[] | Tv[];
   total_pages: number;
   total_results: number;
 }

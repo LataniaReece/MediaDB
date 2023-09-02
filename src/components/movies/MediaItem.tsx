@@ -8,14 +8,16 @@ import placeholder from "../../images/movieItemPlaceholder.jpg";
 import { AppColors } from "../../theme";
 import { useFavoriteMoviesContext } from "../../contexts/FavoriteMoviesContext";
 
-interface MovieItemProps {
+interface MediaItemProps {
   movie: Movie;
   genres: string;
+  itemType: "gridItem" | "sliderItem";
 }
 
 const styles: StylesObject = {
-  movieGridItem: {
+  mediaItem: {
     position: "relative",
+    pr: 2,
     transition: "transform 0.3s, border 0.3s",
     "&:hover": {
       transform: "scale(1.05)",
@@ -40,9 +42,19 @@ const styles: StylesObject = {
     fontStyle: "italic",
     opacity: "80%",
   },
+  mediaFavIcon: {
+    position: "absolute",
+    color: AppColors.red,
+    transformOrigin: "center",
+    transition: "transform 0.3s",
+    right: "25px",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
+  },
 };
 
-const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
+const MediaItem: FC<MediaItemProps> = ({ movie, genres, itemType }) => {
   const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
     useFavoriteMoviesContext();
 
@@ -51,16 +63,8 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
 
   const isFavorite = isMovieFavorite(movie);
 
-  return (
-    <Grid
-      key={movie.id}
-      item
-      sx={styles.movieGridItem}
-      xs={6}
-      sm={4}
-      md={3}
-      lg={2}
-    >
+  const itemContent = (
+    <>
       <Link href={`/movies/${movie.id}`} sx={styles.movieLink}>
         <Box
           component="img"
@@ -80,14 +84,8 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
           aria-label="remove-favorite-movie"
           onClick={() => removeFavoriteMovie(movie)}
           sx={{
-            position: "absolute",
-            top: "25px",
-            color: AppColors.red,
-            transformOrigin: "center",
-            transition: "transform 0.3s",
-            "&:hover": {
-              transform: "scale(1.1)",
-            },
+            ...styles.mediaFavIcon,
+            top: itemType === "gridItem" ? "30px" : "10px",
           }}
         >
           <FavoriteIcon />
@@ -97,21 +95,27 @@ const MovieItem: FC<MovieItemProps> = ({ movie, genres }) => {
           aria-label="add-favorite-movie"
           onClick={() => addFavoriteMovie(movie)}
           sx={{
-            position: "absolute",
-            top: "25px",
-            color: AppColors.red,
-            transformOrigin: "center",
-            transition: "transform 0.3s",
-            "&:hover": {
-              transform: "scale(1.1)",
-            },
+            ...styles.mediaFavIcon,
+            top: itemType === "gridItem" ? "30px" : "10px",
           }}
         >
           <FavoriteBorderIcon />
         </IconButton>
       )}
-    </Grid>
+    </>
+  );
+
+  return (
+    <>
+      {itemType === "gridItem" ? (
+        <Grid item xs={6} sm={4} md={3} lg={2} sx={styles.mediaItem}>
+          {itemContent}
+        </Grid>
+      ) : (
+        <Box sx={styles.mediaItem}>{itemContent}</Box>
+      )}
+    </>
   );
 };
 
-export default MovieItem;
+export default MediaItem;

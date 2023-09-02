@@ -4,12 +4,12 @@ import { Box, Typography } from "@mui/material";
 
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
-import { useGetMovies } from "../hooks/apiHooks/movieApiHooks";
+import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { StylesObject } from "../types/utility";
 import SearchMovies from "../components/movies/SearchMovies";
-import MovieList from "../components/movies/MovieList";
-import MoviePagination from "../components/movies/MoviePagination";
+import MovieList from "../components/movies/MediaGridList";
 import { useMovieGenreContext } from "../contexts/MovieGenreContext";
+import MediaPagination from "../components/movies/MediaPagination";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -27,13 +27,13 @@ const Movies: FC = () => {
 
   const movieListUrl = requestedQuery
     ? `https://api.themoviedb.org/3/search/movie?query=${requestedQuery}&language=en-US&page=${page}`
-    : `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
+    : `https://api.themoviedb.org/3/discover/movie?api_key=ab06241e44a466ac55c0c0aa7cc9c025&page=${page}`;
 
   const {
     data: movieData,
     isLoading: movieDataIsLoading,
     error: movieDataError,
-  } = useGetMovies(movieListUrl);
+  } = useGetMedia(movieListUrl);
   const {
     data: genreData,
     isLoading: genreDataIsLoading,
@@ -62,14 +62,14 @@ const Movies: FC = () => {
         <Typography variant="h1">
           {requestedQuery
             ? `Search Results: ${requestedQuery}`
-            : "Top Rated Movies"}
+            : "Discover Movies"}
         </Typography>
         <Typography
           sx={{ fontStyle: "italic" }}
         >{`${total_results} movies`}</Typography>
       </Box>
       <MovieList movies={movieDataResults} />
-      <MoviePagination
+      <MediaPagination
         totalPages={total_pages}
         page={page}
         handlePageChange={handlePageChange}

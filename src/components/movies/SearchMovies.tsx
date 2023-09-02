@@ -7,10 +7,39 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
+import { StylesObject } from "../../types/utility";
+import { AppColors } from "../../theme";
 
 interface SearchMoviesProps {
   setRequestedQuery: React.Dispatch<React.SetStateAction<string>>;
 }
+
+const styles: StylesObject = {
+  // searchField: {
+  //   backgroundColor: AppColors.bgColor,
+  //   border: "1px #fff solid",
+  //   color: "#fff",
+  // },
+  searchField: {
+    backgroundColor: AppColors.bgColor,
+    "& .MuiInputBase-root": {
+      border: "1px solid #fff",
+      color: "#fff",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #fff",
+    },
+    "& .MuiInputLabel-root": {
+      color: "#fff",
+      // transform: "none", // Disable label animation on input focus
+    },
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#fff", // Customize the border color on focus
+      },
+    },
+  },
+};
 
 const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
   const [query, setQuery] = useState("");
@@ -42,6 +71,7 @@ const SearchMovies: FC<SearchMoviesProps> = ({ setRequestedQuery }) => {
               </InputAdornment>
             ),
           }}
+          sx={styles.searchField}
         />
         {showHelperText && (
           <Alert severity="info" variant="outlined" sx={{ border: 0 }}>

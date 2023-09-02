@@ -3,8 +3,8 @@ import PageWrapper from "../components/PageWrapper";
 import { Box, Typography } from "@mui/material";
 
 import { StylesObject } from "../types/utility";
-import MovieList from "../components/movies/MovieList";
-import MoviePagination from "../components/movies/MoviePagination";
+import MovieList from "../components/movies/MediaGridList";
+import MoviePagination from "../components/movies/MediaPagination";
 import { useFavoriteMoviesContext } from "../contexts/FavoriteMoviesContext";
 
 const styles: StylesObject = {

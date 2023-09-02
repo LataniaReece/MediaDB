@@ -2,15 +2,15 @@ import { FC } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { Genre, Movie } from "../../types/api";
-import MovieItem from "./MovieItem";
 import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
 import { AppColors } from "../../theme";
+import MediaItem from "./MediaItem";
 
-interface MovieListProps {
+interface MediaGridListProps {
   movies: Movie[];
 }
 
-const MovieList: FC<MovieListProps> = ({ movies }) => {
+const MediaGridList: FC<MediaGridListProps> = ({ movies }) => {
   const { data: genreData } = useMovieGenreContext();
 
   const getMovieItemGenres = (ids: number[]) => {
@@ -56,11 +56,18 @@ const MovieList: FC<MovieListProps> = ({ movies }) => {
             (genres = movie.genres
               .map((genre: Genre) => genre.name)
               .join(", "));
-          return <MovieItem key={movie.id} movie={movie} genres={genres} />;
+          return (
+            <MediaItem
+              key={movie.id}
+              movie={movie}
+              genres={genres}
+              itemType={"gridItem"}
+            />
+          );
         })}
       </Grid>
     )
   );
 };
 
-export default MovieList;
+export default MediaGridList;
