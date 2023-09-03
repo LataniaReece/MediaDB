@@ -2,18 +2,19 @@ import { FC } from "react";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { FavoriteMoviesProvider } from "./contexts/FavoriteMoviesContext";
 import Navbar from "./components/Navbar";
+import { FavoritesProvider } from "./contexts/FavoritesContext";
+import { MovieGenreProvider } from "./contexts/MovieGenreContext";
 import Routes from "./Routes";
 import { theme } from "./theme";
-import { MovieGenreProvider } from "./contexts/MovieGenreContext";
+
 import "react-multi-carousel/lib/styles.css";
 
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <FavoriteMoviesProvider>
+      <FavoritesProvider>
         <MovieGenreProvider>
           <Router>
             <Navbar />
@@ -22,7 +23,7 @@ const App: FC = () => {
             </Box>
           </Router>
         </MovieGenreProvider>
-      </FavoriteMoviesProvider>
+      </FavoritesProvider>
     </ThemeProvider>
   );
 };

@@ -6,7 +6,7 @@ import {
   GetGenresResponse,
   GetMediaResponse,
   Movie,
-  Tv,
+  Show,
 } from "../../types/api";
 import useApiHookBase from "./useApiHookBase";
 
@@ -75,7 +75,7 @@ const useGetGenres = () => {
 
 // Get movie details hook
 const useGetMediaDetails = (url: string) => {
-  return useApiHookBase<Movie | Tv>(url);
+  return useApiHookBase<Movie | Show>(url);
 };
 // Get media hook
 const useGetMedia = (url: string) => {

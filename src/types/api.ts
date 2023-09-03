@@ -15,7 +15,7 @@ export interface Movie extends Media {
   type: "movie";
 }
 
-export interface Tv extends Media {
+export interface Show extends Media {
   name?: string;
   first_air_date?: string;
   last_air_date?: string;
@@ -32,7 +32,7 @@ export interface Genre {
 
 export interface GetMediaResponse {
   page: number;
-  results: Movie[] | Tv[];
+  results: Movie[] | Show[];
   total_pages: number;
   total_results: number;
 }

@@ -8,7 +8,7 @@ import PageError from "../components/PageError";
 import MediaCarousel from "../components/media/MediaSlider";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { StylesObject } from "../types/utility";
-import { Movie, Tv } from "../types/api";
+import { Movie, Show } from "../types/api";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -62,7 +62,7 @@ const Home: FC = () => {
   const tvToShow = tvDataResults.slice(0, 12).map((tvShow) => ({
     ...tvShow,
     type: "show",
-  })) as Tv[];
+  })) as Show[];
 
   return (
     <PageWrapper sx={{}}>

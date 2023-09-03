@@ -8,10 +8,12 @@ import PageError from "../components/PageError";
 import SearchMedia from "../components/media/SearchMedia";
 import MediaGridList from "../components/media/MediaGridList";
 import MediaPagination from "../components/media/MediaPagination";
+
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
-import { useMovieGenreContext } from "../contexts/MovieGenreContext";
-import { ErrorResponse, Movie, Tv } from "../types/api";
+import useValidateMediaType from "../hooks/useValidateMediaType";
+import { ErrorResponse, Movie, Show } from "../types/api";
 import { StylesObject } from "../types/utility";
+import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -26,7 +28,8 @@ const styles: StylesObject = {
   },
 };
 
-const MediaList: FC = () => {
+const MediaDiscover: FC = () => {
+  useValidateMediaType();
   const { type } = useParams();
 
   const [page, setPage] = useState(1);
@@ -48,7 +51,7 @@ const MediaList: FC = () => {
     error: mediaDataError,
   } = useGetMedia(mediaListUrl) as {
     data: {
-      results: Movie[] | Tv[];
+      results: Movie[] | Show[];
       total_pages: number;
       total_results: number;
     };
@@ -64,7 +67,8 @@ const MediaList: FC = () => {
 
   useEffect(() => {
     setRequestedQuery("");
-  }, [type]);
+    setPage(1);
+  }, [type, setRequestedQuery, setPage]);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -103,7 +107,7 @@ const MediaList: FC = () => {
           isMovie ? "movies" : "shows"
         }`}</Typography>
       </Box>
-      <MediaGridList media={mediaDataResults} />
+      <MediaGridList media={mediaDataResults} type={type} />
       <MediaPagination
         totalPages={total_pages}
         page={page}
@@ -113,4 +117,4 @@ const MediaList: FC = () => {
   );
 };
 
-export default MediaList;
+export default MediaDiscover;

@@ -4,13 +4,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { StylesObject } from "../../types/utility";
-import { Movie, Tv } from "../../types/api";
+import { Movie, Show } from "../../types/api";
 import placeholder from "../../images/movieItemPlaceholder.jpg";
 import { AppColors } from "../../theme";
-import { useFavoriteMoviesContext } from "../../contexts/FavoriteMoviesContext";
+import { useFavoritesContext } from "../../contexts/FavoritesContext";
+import { isMovie } from "../../utils";
 
 interface MediaItemProps {
-  media: Movie | Tv;
+  media: Movie | Show;
   genres: string;
   itemType: "gridItem" | "sliderItem";
 }
@@ -55,18 +56,24 @@ const styles: StylesObject = {
   },
 };
 
-const isMovie = (media: Movie | Tv): media is Movie => {
-  return (media as Movie).title !== undefined;
-};
-
 const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
-  // const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
-  //   useFavoriteMoviesContext();
+  const {
+    favoriteMovies,
+    favoriteShows,
+    addFavoriteMovie,
+    removeFavoriteMovie,
+    addFavoriteShow,
+    removeFavoriteShow,
+  } = useFavoritesContext();
 
-  // const isMovieFavorite = (media: Movie | Tv) =>
-  //   favoriteMovies.filter((favMovie) => favMovie.id === movie.id).length > 0;
-
-  // const isFavorite = isMovieFavorite(movie);
+  let isFavorite;
+  if (isMovie(media)) {
+    isFavorite =
+      favoriteMovies.filter((favMovie) => favMovie.id === media.id).length > 0;
+  } else {
+    isFavorite =
+      favoriteShows.filter((favShow) => favShow.id === media.id).length > 0;
+  }
 
   const itemContent = (
     <>
@@ -94,10 +101,14 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
         </Typography>
         <Typography sx={styles.mediaGenre}>{genres}</Typography>
       </Link>
-      {/* {isFavorite ? (
+      {isFavorite ? (
         <IconButton
           aria-label="remove-favorite-movie"
-          onClick={() => removeFavoriteMovie(movie)}
+          onClick={
+            isMovie(media)
+              ? () => removeFavoriteMovie(media)
+              : () => removeFavoriteShow(media)
+          }
           sx={{
             ...styles.mediaFavIcon,
             top: itemType === "gridItem" ? "30px" : "10px",
@@ -108,7 +119,11 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
       ) : (
         <IconButton
           aria-label="add-favorite-movie"
-          onClick={() => addFavoriteMovie(movie)}
+          onClick={
+            isMovie(media)
+              ? () => addFavoriteMovie(media)
+              : () => addFavoriteShow(media)
+          }
           sx={{
             ...styles.mediaFavIcon,
             top: itemType === "gridItem" ? "30px" : "10px",
@@ -116,7 +131,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
         >
           <FavoriteBorderIcon />
         </IconButton>
-      )} */}
+      )}
     </>
   );
 

@@ -1,30 +1,22 @@
 import { FC } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { Genre, Movie, Tv } from "../../types/api";
+
+import MediaItem from "./MediaItem";
+import { Genre, Movie, Show } from "../../types/api";
 import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
 import { AppColors } from "../../theme";
-import MediaItem from "./MediaItem";
+import { getMediaItemGenres } from "../../utils";
 
 interface MediaGridListProps {
-  media: Movie[] | Tv[];
+  media: Movie[] | Show[];
+  type: string | undefined;
 }
 
-const MediaGridList: FC<MediaGridListProps> = ({ media }) => {
+const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
   const { data: genreData } = useMovieGenreContext();
 
-  const getMovieItemGenres = (ids: number[]) => {
-    let genreNames: string[] = [];
-    ids.map((id) => {
-      const genre = genreData?.find((genre) => genre.id === id);
-      if (genre) {
-        genreNames.push(genre.name);
-      }
-    });
-    return genreNames.join(", ");
-  };
-
-  if (media.length === 0) {
+  if (media.length === 0 && type) {
     return (
       <Box
         sx={{
@@ -36,7 +28,9 @@ const MediaGridList: FC<MediaGridListProps> = ({ media }) => {
         }}
       >
         <InfoIcon sx={{ color: AppColors.blueLight, fontSize: 50, mb: 2 }} />
-        <Typography variant="h5">No Favorite Movies Found</Typography>
+        <Typography variant="h5">{`No Favorite ${
+          type === "movies" ? "Movies" : "Shows"
+        } Found`}</Typography>
       </Box>
     );
   }
@@ -49,10 +43,10 @@ const MediaGridList: FC<MediaGridListProps> = ({ media }) => {
       <Grid container columnSpacing={1} rowSpacing={{ xs: 4, md: 3 }}>
         {media.map((mediaItem) => {
           let genres = "";
-          // Movie is basic format
+          // Media is basic format
           mediaItem.genre_ids &&
-            (genres = getMovieItemGenres(mediaItem.genre_ids));
-          // Movie is detailed format
+            (genres = getMediaItemGenres(mediaItem.genre_ids, genreData));
+          // Media is detailed format
           mediaItem.genres &&
             (genres = mediaItem.genres
               .map((genre: Genre) => genre.name)

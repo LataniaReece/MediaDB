@@ -1,26 +1,28 @@
 import { FC } from "react";
-import { useParams } from "react-router-dom";
-import PageWrapper from "../components/PageWrapper";
-import { useGetMediaDetails } from "../hooks/apiHooks/apiHooks";
-import PageLoader from "../components/PageLoader";
-import PageError from "../components/PageError";
 import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";
-import { StylesObject } from "../types/utility";
-import { ErrorResponse, Genre, Movie, Tv } from "../types/api";
-import { AppColors } from "../theme";
-import { format } from "date-fns";
-import placeholderImage from "../images/movieDetailsPlaceholder.jpg";
-import { useFavoriteMoviesContext } from "../contexts/FavoriteMoviesContext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useParams } from "react-router-dom";
+import { format } from "date-fns";
+
+import PageWrapper from "../components/PageWrapper";
+import PageLoader from "../components/PageLoader";
+import PageError from "../components/PageError";
+import { useFavoritesContext } from "../contexts/FavoritesContext";
+import { StylesObject } from "../types/utility";
+import { ErrorResponse, Genre, Movie, Show } from "../types/api";
+import { useGetMediaDetails } from "../hooks/apiHooks/apiHooks";
+import useValidateMediaType from "../hooks/useValidateMediaType";
+import { isMovie as isMovieCheck } from "../utils";
+import { AppColors } from "../theme";
+
+import placeholderImage from "../images/movieDetailsPlaceholder.jpg";
 
 const styles: StylesObject = {
   container: {
     display: "flex",
     flexDirection: "column",
-    // alignItems: "center",
     minHeight: "100vh",
-    // mt: { xs: 0, sm: 2, md: -5 },
   },
   movieImg: {
     maxWidth: "100%",
@@ -89,6 +91,7 @@ const styles: StylesObject = {
 };
 
 const MediaDetails: FC = () => {
+  useValidateMediaType();
   const { type, id: paramsId } = useParams();
   const isMovie = type === "movies";
 
@@ -100,7 +103,7 @@ const MediaDetails: FC = () => {
     isLoading,
     error,
   } = useGetMediaDetails(url) as {
-    data: Movie | Tv;
+    data: Movie | Show;
     isLoading: boolean;
     error: ErrorResponse | null;
   };
@@ -120,14 +123,6 @@ const MediaDetails: FC = () => {
       </PageWrapper>
     );
   }
-
-  //   const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } =
-  //     useFavoriteMoviesContext();
-
-  //   const isMediaFavorite = (media: Movie | Tv) =>
-  //     favoriteMovies.filter((favMedia) => favMedia.id === media.id).length > 0;
-
-  //   const isFavorite = isMediaFavorite(mediaData);
 
   let title,
     genres,
@@ -153,7 +148,7 @@ const MediaDetails: FC = () => {
     tagline = movie.tagline;
     imdb_id = movie.imdb_id;
   } else {
-    const show = mediaData as Tv;
+    const show = mediaData as Show;
     name = show.name;
     genres = show.genres;
     overview = show.overview;
@@ -167,6 +162,25 @@ const MediaDetails: FC = () => {
   }
 
   const formattedGenres = genres?.map((genre: Genre) => genre.name).join(", ");
+
+  const {
+    favoriteMovies,
+    favoriteShows,
+    addFavoriteMovie,
+    removeFavoriteMovie,
+    addFavoriteShow,
+    removeFavoriteShow,
+  } = useFavoritesContext();
+
+  let isFavorite;
+  if (isMovie) {
+    isFavorite =
+      favoriteMovies.filter((favMovie) => favMovie.id === mediaData.id).length >
+      0;
+  } else {
+    isFavorite =
+      favoriteShows.filter((favShow) => favShow.id === mediaData.id).length > 0;
+  }
 
   const shouldShowPaperWidget =
     !!overview ||
@@ -226,6 +240,39 @@ const MediaDetails: FC = () => {
                 <Typography variant="h2" sx={styles.plotTitle}>
                   Plot Summary
                 </Typography>
+                {isFavorite ? (
+                  <Tooltip title={"Click to remove from favorites"}>
+                    <Button
+                      variant="contained"
+                      aria-label="remove-favorite-movie"
+                      onClick={
+                        isMovieCheck(mediaData)
+                          ? () => removeFavoriteMovie(mediaData)
+                          : () => removeFavoriteShow(mediaData)
+                      }
+                      startIcon={<FavoriteIcon sx={{ mt: -0.5 }} />}
+                      sx={styles.favoriteButton}
+                    >
+                      In Favorites
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title={"Click to add to favorites"}>
+                    <Button
+                      variant="contained"
+                      aria-label="add-favorite-movie"
+                      onClick={
+                        isMovieCheck(mediaData)
+                          ? () => addFavoriteMovie(mediaData)
+                          : () => addFavoriteShow(mediaData)
+                      }
+                      startIcon={<FavoriteBorderIcon sx={{ mt: -0.5 }} />}
+                      sx={styles.favoriteButton}
+                    >
+                      Add to Favorites
+                    </Button>
+                  </Tooltip>
+                )}
               </Box>
               <Typography sx={styles.plotOverview}>{overview}</Typography>
             </>

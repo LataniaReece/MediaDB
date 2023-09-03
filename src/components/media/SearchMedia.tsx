@@ -55,7 +55,6 @@ const SearchMedia: FC<SearchMediaProps> = ({ setRequestedQuery, type }) => {
     }
   };
 
-  console.log(type);
   return (
     <>
       <Box component="form" onSubmit={handleSubmit}>
