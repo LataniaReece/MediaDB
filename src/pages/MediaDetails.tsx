@@ -30,31 +30,37 @@ const styles: StylesObject = {
     mb: 2,
     alignSelf: "center",
   },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    mb: 1.5,
+  },
   title: {
     fontWeight: "bold",
     letterSpacing: "2px",
     mr: 2,
   },
   statusPill: {
-    backgroundColor: "gray",
     width: "fit-content",
     borderRadius: "30px",
     letterSpacing: "1px",
-    p: 1,
+    px: 3,
+    py: 1,
     fontWeight: "bold",
   },
   tagline: {
     fontStyle: "italic",
-    mb: 3,
+    mb: 2,
     opacity: 0.6,
   },
   contentPaper: {
     pt: 2,
     pb: 4,
-    px: 3,
-    borderRadius: "10px",
-    backgroundColor: AppColors.blueLight,
-    boxShadow: "0px 7px 29px 0px rgba(159, 165, 188, 0.9)",
+    px: 5,
+    borderRadius: "5px",
+    backgroundColor: AppColors.bgColor,
+    border: "2mm ridge rgba(255,255,255, 0.6)",
+    boxShadow: "-1px 0px 24px -3px rgba(255,255,255,0.2)",
     minWidth: "100%",
   },
   plotHeaderContainer: {
@@ -73,6 +79,7 @@ const styles: StylesObject = {
   plotTitle: {
     my: 2,
     fontWeight: "bold",
+    // color: AppColors.orange,
   },
   plotOverview: {
     fontSize: 16,
@@ -161,6 +168,15 @@ const MediaDetails: FC = () => {
 
   const formattedGenres = genres?.map((genre: Genre) => genre.name).join(", ");
 
+  const shouldShowPaperWidget =
+    !!overview ||
+    !!formattedGenres ||
+    !!release_date ||
+    (!!firstAirDate && !!lastAirDate) ||
+    !!numberOfSeasons ||
+    !!numberOfEpisodes ||
+    !!imdb_id;
+
   return (
     <PageWrapper sx={styles.container}>
       <Box
@@ -175,11 +191,25 @@ const MediaDetails: FC = () => {
       />
       {title || name ? (
         <Box sx={{ my: 2 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={styles.titleContainer}>
             <Typography variant="h1" sx={styles.title}>
               {title || name}
             </Typography>
-            {status && <Typography sx={styles.statusPill}>{status}</Typography>}
+            {status && (
+              <Typography
+                sx={{
+                  ...styles.statusPill,
+                  backgroundColor:
+                    status === "Returning Series"
+                      ? "#658038"
+                      : status === "Ended"
+                      ? "#8B0000"
+                      : "#858585",
+                }}
+              >
+                {status}
+              </Typography>
+            )}
           </Box>
           {tagline && (
             <Typography variant="h3" sx={styles.tagline}>
@@ -188,55 +218,61 @@ const MediaDetails: FC = () => {
           )}
         </Box>
       ) : null}
-      <Paper sx={styles.contentPaper}>
-        {overview && (
-          <>
-            <Box sx={styles.plotHeaderContainer}>
-              <Typography variant="h2" sx={styles.plotTitle}>
-                Plot Summary
-              </Typography>
-            </Box>
-            <Typography sx={styles.plotOverview}>{overview}</Typography>
-            {formattedGenres && (
-              <Typography>
-                <b>Genres:</b> {formattedGenres}
-              </Typography>
-            )}
-            {release_date && (
-              <Typography sx={{ mb: 2 }}>
-                <b>Release Date:</b>{" "}
-                {format(new Date(release_date), "MM/dd/yyyy")}
-              </Typography>
-            )}
-            {firstAirDate && lastAirDate && (
-              <Typography>
-                <b>Years Active: </b>
-                {format(new Date(firstAirDate), "MM/dd/yyyy")} -
-                {format(new Date(lastAirDate), "MM/dd/yyyy")}
-              </Typography>
-            )}
-            {numberOfSeasons && (
-              <Typography>
-                <b>Number of Seasons:</b> {numberOfSeasons}
-              </Typography>
-            )}
-            {numberOfEpisodes && (
-              <Typography>
-                <b>Number of Episodes:</b> {numberOfEpisodes}
-              </Typography>
-            )}
+      {shouldShowPaperWidget && (
+        <Paper sx={styles.contentPaper}>
+          {overview && (
+            <>
+              <Box sx={styles.plotHeaderContainer}>
+                <Typography variant="h2" sx={styles.plotTitle}>
+                  Plot Summary
+                </Typography>
+              </Box>
+              <Typography sx={styles.plotOverview}>{overview}</Typography>
+            </>
+          )}
+          {formattedGenres && (
+            <Typography>
+              <b>Genres:</b> {formattedGenres}
+            </Typography>
+          )}
+          {release_date && (
+            <Typography sx={{ mb: 2 }}>
+              <b>Release Date:</b>{" "}
+              {format(new Date(release_date), "MM/dd/yyyy")}
+            </Typography>
+          )}
+          {firstAirDate && lastAirDate && (
+            <Typography>
+              <b>Years Active: </b>
+              {`${format(new Date(firstAirDate), "MM/dd/yyyy")} -
+              ${
+                status && status !== "Returning Series"
+                  ? format(new Date(lastAirDate), "MM/dd/yyyy")
+                  : "Present"
+              }`}
+            </Typography>
+          )}
+          {numberOfSeasons && (
+            <Typography>
+              <b>Number of Seasons:</b> {numberOfSeasons}
+            </Typography>
+          )}
+          {numberOfEpisodes && (
+            <Typography>
+              <b>Number of Episodes:</b> {numberOfEpisodes}
+            </Typography>
+          )}
 
-            {imdb_id && (
-              <Link
-                href={`https://www.imdb.com/title/${imdb_id}/`}
-                target="_blank"
-              >
-                See IMDB Page
-              </Link>
-            )}
-          </>
-        )}
-      </Paper>
+          {imdb_id && (
+            <Link
+              href={`https://www.imdb.com/title/${imdb_id}/`}
+              target="_blank"
+            >
+              See IMDB Page
+            </Link>
+          )}
+        </Paper>
+      )}
     </PageWrapper>
   );
 };

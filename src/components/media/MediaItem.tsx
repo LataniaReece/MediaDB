@@ -72,7 +72,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
     <>
       <Link
         href={
-          media.type === "movie"
+          isMovie(media)
             ? `/media/movies/${media.id}`
             : `/media/shows/${media.id}`
         }

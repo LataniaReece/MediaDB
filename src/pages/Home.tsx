@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
-import MediaCarousel from "../components/movies/MediaSlider";
+import MediaCarousel from "../components/media/MediaSlider";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { StylesObject } from "../types/utility";
 import { Movie, Tv } from "../types/api";

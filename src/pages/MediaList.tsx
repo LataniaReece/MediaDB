@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import PageWrapper from "../components/PageWrapper";
 import PageLoader from "../components/PageLoader";
 import PageError from "../components/PageError";
-import SearchMedia from "../components/movies/SearchMedia";
-import MediaGridList from "../components/movies/MediaGridList";
-import MediaPagination from "../components/movies/MediaPagination";
+import SearchMedia from "../components/media/SearchMedia";
+import MediaGridList from "../components/media/MediaGridList";
+import MediaPagination from "../components/media/MediaPagination";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 import { ErrorResponse, Movie, Tv } from "../types/api";
@@ -20,6 +20,9 @@ const styles: StylesObject = {
     justifyContent: "space-between",
     alignItems: "center",
     my: 2,
+  },
+  resetButton: {
+    mt: 1,
   },
 };
 
@@ -81,6 +84,15 @@ const MediaList: FC = () => {
   return (
     <PageWrapper>
       <SearchMedia setRequestedQuery={setRequestedQuery} type={type} />
+      {requestedQuery && (
+        <Button
+          variant="text"
+          sx={styles.resetButton}
+          onClick={() => setRequestedQuery("")}
+        >
+          Reset Search
+        </Button>
+      )}
       <Box sx={styles.headerContainer}>
         <Typography variant="h1">
           {requestedQuery
