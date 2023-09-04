@@ -44,7 +44,7 @@ const styles: StylesObject = {
     whiteSpace: "nowrap",
     borderRadius: 0,
     backgroundColor: AppColors.blueDark,
-    pt: { xs: 8, md: 2 },
+    pt: 2,
     pl: 2,
   },
   openIcon: {
@@ -132,9 +132,14 @@ const Navbar: FC = () => {
   const drawer = (
     <>
       <ArrowBackIos onClick={handleDrawerToggle} sx={styles.closeIcon} />
-      <Typography component={Link} to="/" sx={styles.logo}>
+      <ListItemButton
+        component={Link}
+        to="/"
+        sx={styles.logo}
+        onClick={handleCloseNavMenu}
+      >
         MediaDB
-      </Typography>
+      </ListItemButton>
       <Box sx={styles.listWrapper}>
         <Stack direction="column">
           <List sx={styles.desktopNavLinks}>

@@ -13,7 +13,6 @@ import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import useValidateMediaType from "../hooks/useValidateMediaType";
 import { ErrorResponse, Movie, Show } from "../types/api";
 import { StylesObject } from "../types/utility";
-import { useMovieGenreContext } from "../contexts/MovieGenreContext";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -60,12 +59,6 @@ const MediaDiscover: FC = () => {
     refetch: () => void;
   };
 
-  const {
-    data: genreData,
-    isLoading: genreDataIsLoading,
-    error: genreDataError,
-  } = useMovieGenreContext();
-
   useEffect(() => {
     setRequestedQuery("");
     setPage(1);
@@ -76,11 +69,11 @@ const MediaDiscover: FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (mediaDataIsLoading || genreDataIsLoading) {
+  if (mediaDataIsLoading) {
     return <PageLoader>Loading...</PageLoader>;
   }
 
-  if (mediaDataError || !genreData || !mediaData || genreDataError) {
+  if (mediaDataError || !mediaData) {
     return <PageError />;
   }
 

@@ -3,16 +3,12 @@ import { Box } from "@mui/material";
 import Carousel from "react-multi-carousel";
 
 import MediaItem from "./MediaItem";
-import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
-import { Genre, Movie, Show } from "../../types/api";
-import { getMediaItemGenres } from "../../utils";
+import { Movie, Show } from "../../types/api";
 
 interface MediaSliderProps {
   media: Movie[] | Show[];
 }
 const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
-  const { data: genreData } = useMovieGenreContext();
-
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1800 },
@@ -32,30 +28,16 @@ const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 3,
     },
   };
 
   return (
     <Box sx={{ overflow: "none" }}>
       <Carousel responsive={responsive} showDots={false} swipeable={true}>
-        {media.map((item) => {
-          let genres = "";
-          // Movie is basic format
-          item.genre_ids &&
-            (genres = getMediaItemGenres(item.genre_ids, genreData));
-          // Movie is detailed format
-          item.genres &&
-            (genres = item.genres.map((genre: Genre) => genre.name).join(", "));
-          return (
-            <MediaItem
-              key={item.id}
-              media={item}
-              genres={genres}
-              itemType="sliderItem"
-            />
-          );
-        })}
+        {media.map((item) => (
+          <MediaItem key={item.id} media={item} itemType="sliderItem" />
+        ))}
       </Carousel>
     </Box>
   );

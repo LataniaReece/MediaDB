@@ -3,10 +3,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 
 import MediaItem from "./MediaItem";
-import { Genre, Movie, Show } from "../../types/api";
-import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
+import { Movie, Show } from "../../types/api";
 import { AppColors } from "../../theme";
-import { getMediaItemGenres } from "../../utils";
 import { StylesObject } from "../../types/utility";
 
 interface MediaGridListProps {
@@ -23,8 +21,6 @@ const styles: StylesObject = {
 };
 
 const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
-  const { data: genreData } = useMovieGenreContext();
-
   if (media.length === 0 && type) {
     return (
       <Box
@@ -46,34 +42,20 @@ const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
 
   return (
     media &&
-    media.length > 0 &&
-    genreData &&
-    genreData.length > 0 && (
+    media.length > 0 && (
       <Grid
         container
         columnSpacing={2}
         rowSpacing={3}
         sx={styles.gridContainer}
       >
-        {media.map((mediaItem) => {
-          let genres = "";
-          // Media is basic format
-          mediaItem.genre_ids &&
-            (genres = getMediaItemGenres(mediaItem.genre_ids, genreData));
-          // Media is detailed format
-          mediaItem.genres &&
-            (genres = mediaItem.genres
-              .map((genre: Genre) => genre.name)
-              .join(", "));
-          return (
-            <MediaItem
-              key={mediaItem.id}
-              media={mediaItem}
-              genres={genres}
-              itemType={"gridItem"}
-            />
-          );
-        })}
+        {media.map((mediaItem) => (
+          <MediaItem
+            key={mediaItem.id}
+            media={mediaItem}
+            itemType={"gridItem"}
+          />
+        ))}
       </Grid>
     )
   );

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 
 interface MediaItemProps {
   media: Movie | Show;
-  genres: string;
   itemType: "gridItem" | "sliderItem";
 }
 
@@ -50,14 +49,13 @@ const styles: StylesObject = {
     color: AppColors.red,
     transformOrigin: "center",
     transition: "transform 0.3s",
-    right: "25px",
     "&:hover": {
       transform: "scale(1.1)",
     },
   },
 };
 
-const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
+const MediaItem: FC<MediaItemProps> = ({ media, itemType }) => {
   const {
     favoriteMovies,
     favoriteShows,
@@ -97,11 +95,6 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
           alt={media.title}
           sx={styles.mediaImg}
         />
-
-        <Typography sx={styles.mediaTitle}>
-          {isMovie(media) ? media.title : media.name}
-        </Typography>
-        <Typography sx={styles.mediaGenre}>{genres}</Typography>
       </Box>
       {isFavorite ? (
         <IconButton
@@ -113,7 +106,8 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
           }
           sx={{
             ...styles.mediaFavIcon,
-            top: itemType === "gridItem" ? "30px" : "10px",
+            top: itemType === "gridItem" ? "25px" : { xs: "2px", md: "8px" },
+            right: itemType === "gridItem" ? "5px" : { xs: "12px", md: "15px" },
           }}
         >
           <FavoriteIcon />
@@ -128,7 +122,9 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
           }
           sx={{
             ...styles.mediaFavIcon,
-            top: itemType === "gridItem" ? "30px" : "10px",
+            top: itemType === "gridItem" ? "25px" : { xs: "2px", md: "8px" },
+
+            right: itemType === "gridItem" ? "5px" : { xs: "12px", md: "15px" },
           }}
         >
           <FavoriteBorderIcon />
@@ -140,7 +136,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
   return (
     <>
       {itemType === "gridItem" ? (
-        <Grid item xs={12} sm={4} lg={3} xl={2} sx={styles.mediaItem}>
+        <Grid item xs={4} sm={3} lg={2} sx={styles.mediaItem}>
           {itemContent}
         </Grid>
       ) : (

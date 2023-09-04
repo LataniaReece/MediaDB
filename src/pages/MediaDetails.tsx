@@ -34,13 +34,15 @@ const styles: StylesObject = {
   },
   titleContainer: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: { xs: "column", md: "row" },
+    alignItems: { xs: "flex-start", md: "center" },
     mb: 1.5,
   },
   title: {
     fontWeight: "bold",
     letterSpacing: "2px",
     mr: 2,
+    order: { xs: 1, md: 0 },
   },
   statusPill: {
     width: "fit-content",
@@ -49,6 +51,9 @@ const styles: StylesObject = {
     px: 3,
     py: 1,
     fontWeight: "bold",
+    order: { xs: 0, md: 1 },
+    mb: { xs: 2, md: 0 },
+    textAlign: "center",
   },
   tagline: {
     fontStyle: "italic",
@@ -56,9 +61,9 @@ const styles: StylesObject = {
     opacity: 0.6,
   },
   contentPaper: {
-    pt: 2,
+    pt: { xs: 0, md: 2 },
     pb: 4,
-    px: 5,
+    px: { xs: 2, md: 5 },
     borderRadius: "5px",
     backgroundColor: AppColors.bgColor,
     border: "2mm ridge rgba(255,255,255, 0.6)",

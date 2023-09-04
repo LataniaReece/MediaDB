@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
-import { MovieGenreProvider } from "./contexts/MovieGenreContext";
 import Routes from "./Routes";
 import { theme } from "./theme";
 
@@ -13,14 +12,12 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <FavoritesProvider>
-        <MovieGenreProvider>
-          <Router>
-            <Navbar />
-            <Box sx={{ mt: 3 }}>
-              <Routes />
-            </Box>
-          </Router>
-        </MovieGenreProvider>
+        <Router>
+          <Navbar />
+          <Box sx={{ mt: 3 }}>
+            <Routes />
+          </Box>
+        </Router>
       </FavoritesProvider>
     </ThemeProvider>
   );

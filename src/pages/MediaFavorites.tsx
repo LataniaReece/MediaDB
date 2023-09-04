@@ -14,7 +14,7 @@ const styles: StylesObject = {
     display: "flex",
     flexDirection: { xs: "column", sm: "row" },
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: { xs: "flex-start", md: "center" },
     my: 2,
   },
 };

@@ -5,8 +5,7 @@ interface Media {
   poster_path: string;
   backdrop_path?: string;
   tagline?: string;
-  genre_ids: number[];
-  genres?: Genre[];
+  genres: Genre[];
 }
 
 export interface Movie extends Media {
@@ -34,15 +33,6 @@ export interface GetMediaResponse {
   results: Movie[] | Show[];
   total_pages: number;
   total_results: number;
-}
-
-export interface GetGenresResponse {
-  genres: Genre[];
-}
-
-export interface Genre {
-  id: number;
-  name: string;
 }
 
 export interface ErrorResponse {
