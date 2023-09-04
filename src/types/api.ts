@@ -31,7 +31,6 @@ export interface Genre {
 }
 
 export interface GetMediaResponse {
-  page: number;
   results: Movie[] | Show[];
   total_pages: number;
   total_results: number;

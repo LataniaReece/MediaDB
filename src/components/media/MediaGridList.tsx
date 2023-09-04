@@ -7,11 +7,20 @@ import { Genre, Movie, Show } from "../../types/api";
 import { useMovieGenreContext } from "../../contexts/MovieGenreContext";
 import { AppColors } from "../../theme";
 import { getMediaItemGenres } from "../../utils";
+import { StylesObject } from "../../types/utility";
 
 interface MediaGridListProps {
   media: Movie[] | Show[];
   type: string | undefined;
 }
+
+const styles: StylesObject = {
+  gridContainer: {
+    "& .MuiGrid-root": {
+      pr: 0,
+    },
+  },
+};
 
 const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
   const { data: genreData } = useMovieGenreContext();
@@ -40,7 +49,12 @@ const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
     media.length > 0 &&
     genreData &&
     genreData.length > 0 && (
-      <Grid container columnSpacing={1} rowSpacing={{ xs: 4, md: 3 }}>
+      <Grid
+        container
+        columnSpacing={2}
+        rowSpacing={3}
+        sx={styles.gridContainer}
+      >
         {media.map((mediaItem) => {
           let genres = "";
           // Media is basic format

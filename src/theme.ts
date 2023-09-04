@@ -59,6 +59,7 @@ const theme = createTheme({
           },
           "& .MuiButtonBase-root": {
             backgroundColor: AppColors.blueLight,
+            margin: "0 2px",
             "&:hover": {
               backgroundColor: AppColors.blue,
             },

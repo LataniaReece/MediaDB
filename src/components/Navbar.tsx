@@ -6,7 +6,7 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import TvIcon from "@mui/icons-material/Tv";
 import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 
@@ -84,6 +84,14 @@ const styles: StylesObject = {
     fontSize: 20,
     color: "white",
     width: "100%",
+    transition: "all 0.3s ease",
+    borderRadius: "10px",
+    "&:hover": {
+      backgroundColor: "rgba(240, 101, 67, 0.5)",
+    },
+    "&.Mui-selected": {
+      backgroundColor: "rgba(240, 101, 67, 0.5)",
+    },
   },
   mobileDrawer: {
     display: { xs: "block", md: "none" },
@@ -108,6 +116,8 @@ const styles: StylesObject = {
 const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const location = useLocation();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -123,11 +133,33 @@ const Navbar: FC = () => {
     <>
       <ArrowBackIos onClick={handleDrawerToggle} sx={styles.closeIcon} />
       <Typography component={Link} to="/" sx={styles.logo}>
-        Stream App
+        MediaDB
       </Typography>
       <Box sx={styles.listWrapper}>
         <Stack direction="column">
           <List sx={styles.desktopNavLinks}>
+            {isMobile ? (
+              <MenuItem
+                key="home"
+                component={Link}
+                to="/"
+                onClick={handleCloseNavMenu}
+                selected={location.pathname === "/"}
+              >
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+            ) : (
+              <ListItemButton
+                key="home"
+                component={Link}
+                to="/"
+                onClick={handleCloseNavMenu}
+                selected={location.pathname === "/"}
+                sx={{ ...styles.desktopNavLink, mb: 1 }}
+              >
+                <ListItemText primary="Home" />
+              </ListItemButton>
+            )}
             <Typography sx={styles.sectionHeader}>Browse</Typography>
             <NavbarLinksSection
               sectionName="browse"
@@ -209,39 +241,62 @@ const NavbarLinksSection = ({
 }: NavbarLinksSectionProps) => {
   const pages = [
     {
+      name: "Movies",
+      href: "/media/movies",
+    },
+    {
       name: "TV Shows",
       href: "/media/shows",
     },
-    { name: "Movies", href: "/media/movies" },
+    {
+      name: "Movies",
+      href: "/favorites/media/movies",
+    },
+    {
+      name: "TV Shows",
+      href: "/favorites/media/shows",
+    },
   ];
+  const location = useLocation();
 
-  return pages.map((page) =>
+  // Filter pages based on sectionName
+  const filteredPages = pages.filter((page) => {
+    if (sectionName === "browse") {
+      return !page.href.includes("favorites");
+    } else if (sectionName === "favorites") {
+      return page.href.includes("favorites");
+    }
+  });
+
+  return filteredPages.map((page) =>
     isMobile ? (
       <MenuItem
         key={page.href}
         component={Link}
-        to={sectionName === "favorites" ? `/favorites${page.href}` : page.href}
+        to={page.href}
         onClick={handleCloseNavMenu}
+        selected={location.pathname === page.href}
       >
         <Typography textAlign="center">{page.name}</Typography>
       </MenuItem>
     ) : (
-      <ListItem
-        component={Link}
-        to={sectionName === "favorites" ? `/favorites${page.href}` : page.href}
+      <ListItemButton
         key={page.href}
+        component={Link}
+        to={page.href}
         onClick={handleCloseNavMenu}
+        selected={location.pathname === page.href}
         sx={styles.desktopNavLink}
       >
         <ListItemIcon>
-          {page.name === "TV Shows" ? (
+          {page.name === "TV Shows" || page.name === "TV Shows (Favorites)" ? (
             <TvIcon sx={{ color: "white" }} />
           ) : (
             <MovieCreationIcon sx={{ color: "white" }} />
           )}
         </ListItemIcon>
         <ListItemText primary={page.name} />
-      </ListItem>
+      </ListItemButton>
     )
   );
 };

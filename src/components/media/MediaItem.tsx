@@ -96,7 +96,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
           sx={styles.mediaImg}
         />
 
-        <Typography sx={styles.mediatitle}>
+        <Typography sx={styles.mediaTitle}>
           {isMovie(media) ? media.title : media.name}
         </Typography>
         <Typography sx={styles.mediaGenre}>{genres}</Typography>
@@ -138,7 +138,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
   return (
     <>
       {itemType === "gridItem" ? (
-        <Grid item xs={6} sm={4} md={3} lg={2} sx={styles.mediaItem}>
+        <Grid item xs={12} sm={4} lg={3} xl={2} sx={styles.mediaItem}>
           {itemContent}
         </Grid>
       ) : (

@@ -20,7 +20,7 @@ const styles: StylesObject = {
     display: "flex",
     flexDirection: { xs: "column", sm: "row" },
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: { xs: "flex-start", sm: "center" },
     my: 2,
   },
   resetButton: {
@@ -43,7 +43,7 @@ const MediaDiscover: FC = () => {
       }?query=${requestedQuery}&language=en-US&page=${page}`
     : `https://api.themoviedb.org/3/discover/${
         isMovie ? "movie" : "tv"
-      }?api_key=ab06241e44a466ac55c0c0aa7cc9c025&page=${page}`;
+      }?page=${page}`;
 
   const {
     data: mediaData,
@@ -57,6 +57,7 @@ const MediaDiscover: FC = () => {
     };
     isLoading: boolean;
     error: ErrorResponse | null;
+    refetch: () => void;
   };
 
   const {

@@ -68,9 +68,9 @@ const styles: StylesObject = {
   plotHeaderContainer: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: { xs: "column", md: "row" },
-    mb: { xs: 2, md: 0 },
+    alignItems: { xs: "flex-start", sm: "center" },
+    flexDirection: { xs: "column", sm: "row" },
+    mb: { xs: 2, sm: 0 },
   },
   favoriteButton: {
     backgroundColor: AppColors.red,
@@ -81,7 +81,6 @@ const styles: StylesObject = {
   plotTitle: {
     my: 2,
     fontWeight: "bold",
-    // color: AppColors.orange,
   },
   plotOverview: {
     fontSize: 16,
@@ -107,6 +106,15 @@ const MediaDetails: FC = () => {
     isLoading: boolean;
     error: ErrorResponse | null;
   };
+
+  const {
+    favoriteMovies,
+    favoriteShows,
+    addFavoriteMovie,
+    removeFavoriteMovie,
+    addFavoriteShow,
+    removeFavoriteShow,
+  } = useFavoritesContext();
 
   if (isLoading) {
     return (
@@ -162,15 +170,6 @@ const MediaDetails: FC = () => {
   }
 
   const formattedGenres = genres?.map((genre: Genre) => genre.name).join(", ");
-
-  const {
-    favoriteMovies,
-    favoriteShows,
-    addFavoriteMovie,
-    removeFavoriteMovie,
-    addFavoriteShow,
-    removeFavoriteShow,
-  } = useFavoritesContext();
 
   let isFavorite;
   if (isMovie) {

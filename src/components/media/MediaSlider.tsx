@@ -15,21 +15,25 @@ const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
   const { data: genreData } = useMovieGenreContext();
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
+    desktop: {
+      breakpoint: { max: 3000, min: 1800 },
       items: 6,
     },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 6,
+    smallDesktop: {
+      breakpoint: { max: 1800, min: 1200 },
+      items: 5,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1200, min: 600 },
       items: 4,
+    },
+    smallTablet: {
+      breakpoint: { max: 600, min: 464 },
+      items: 3,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 2,
+      items: 1,
     },
   };
 
