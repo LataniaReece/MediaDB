@@ -8,8 +8,6 @@ import { MovieGenreProvider } from "./contexts/MovieGenreContext";
 import Routes from "./Routes";
 import { theme } from "./theme";
 
-import "react-multi-carousel/lib/styles.css";
-
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>

@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Box, Button, Link, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 import PageWrapper from "../components/PageWrapper";
@@ -74,6 +74,7 @@ const styles: StylesObject = {
   },
   favoriteButton: {
     backgroundColor: AppColors.red,
+    color: "white",
     "&:hover": {
       backgroundColor: AppColors.redDark,
     },
@@ -310,12 +311,13 @@ const MediaDetails: FC = () => {
           )}
 
           {imdb_id && (
-            <Link
-              href={`https://www.imdb.com/title/${imdb_id}/`}
+            <Box
+              component={Link}
+              to={`https://www.imdb.com/title/${imdb_id}/`}
               target="_blank"
             >
               See IMDB Page
-            </Link>
+            </Box>
           )}
         </Paper>
       )}

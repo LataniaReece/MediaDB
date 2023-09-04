@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Grid, IconButton, Link, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -9,6 +9,7 @@ import placeholder from "../../images/movieItemPlaceholder.jpg";
 import { AppColors } from "../../theme";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 import { isMovie } from "../../utils";
+import { Link } from "react-router-dom";
 
 interface MediaItemProps {
   media: Movie | Show;
@@ -77,8 +78,9 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
 
   const itemContent = (
     <>
-      <Link
-        href={
+      <Box
+        component={Link}
+        to={
           isMovie(media)
             ? `/media/movies/${media.id}`
             : `/media/shows/${media.id}`
@@ -100,7 +102,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, genres, itemType }) => {
           {isMovie(media) ? media.title : media.name}
         </Typography>
         <Typography sx={styles.mediaGenre}>{genres}</Typography>
-      </Link>
+      </Box>
       {isFavorite ? (
         <IconButton
           aria-label="remove-favorite-movie"
