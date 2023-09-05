@@ -6,7 +6,7 @@ import MediaItem from "./MediaItem";
 import { Movie, Show } from "../../types/api";
 
 interface MediaSliderProps {
-  media: Movie[] | Show[];
+  media: (Movie | Show)[];
 }
 const MediaSlider: FC<MediaSliderProps> = ({ media }) => {
   const responsive = {

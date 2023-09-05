@@ -1,9 +1,6 @@
 import { FC } from "react";
 import PageWrapper from "../components/PageWrapper";
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-
-import PageLoader from "../components/PageLoader";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import PageError from "../components/PageError";
 import MediaCarousel from "../components/media/MediaSlider";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
@@ -19,83 +16,87 @@ const styles: StylesObject = {
   },
   header: {
     color: "#fff",
+    fontSize: 20,
   },
-  button: {
-    textTransform: "capitalize",
-    color: "#000",
+  loader: {
+    mt: 3,
   },
 };
 
+interface MediaData {
+  title: string;
+  url: string;
+}
+
+const mediaData: MediaData[] = [
+  {
+    title: "Popular Movies",
+    url: "https://api.themoviedb.org/3/discover/movie",
+  },
+  {
+    title: "Now Playing Movies",
+    url: "https://api.themoviedb.org/3/movie/now_playing",
+  },
+  {
+    title: "Upcoming Movies",
+    url: "https://api.themoviedb.org/3/movie/upcoming",
+  },
+  {
+    title: "Popular Shows",
+    url: "https://api.themoviedb.org/3/tv/popular",
+  },
+  {
+    title: "Top Rated Shows",
+    url: "https://api.themoviedb.org/3/tv/top_rated",
+  },
+];
+
 const Home: FC = () => {
-  const movieUrl = "https://api.themoviedb.org/3/discover/movie";
-  const tvUrl = "https://api.themoviedb.org/3/discover/tv";
+  const components = mediaData.map(({ title, url }, index) => {
+    const mediaType = title.toLowerCase().includes("movie") ? "movie" : "show";
+    const { data, isLoading, error } = useGetMedia(url);
 
-  const {
-    data: movieData,
-    isLoading: movieDataIsLoading,
-    error: movieDataError,
-  } = useGetMedia(movieUrl);
-  const {
-    data: tvData,
-    isLoading: tvDataIsLoading,
-    error: tvDataError,
-  } = useGetMedia(tvUrl);
-
-  if (movieDataIsLoading || tvDataIsLoading) {
-    return <PageLoader>Loading...</PageLoader>;
-  }
-
-  if (movieDataError || !movieData || !tvData || tvDataError) {
-    return <PageError />;
-  }
-
-  const { results: movieDataResults } = movieData;
-  const { results: tvDataResults } = tvData;
-
-  // const moviesToShow = movieDataResults.slice(0, 12);
-  const moviesToShow = movieDataResults.slice(0, 12).map((movie) => ({
-    ...movie,
-    type: "movie",
-  })) as Movie[];
-
-  // const tvToShow = tvDataResults.slice(0, 12);
-  const tvToShow = tvDataResults.slice(0, 12).map((tvShow) => ({
-    ...tvShow,
-    type: "show",
-  })) as Show[];
-
-  return (
-    <PageWrapper sx={{}}>
-      <Box sx={styles.headerContainer}>
-        <Typography variant="h1" sx={styles.header}>
-          Movies
-        </Typography>
-        <Button
-          component={Link}
-          variant="contained"
-          to="/media/movies"
-          sx={styles.button}
+    if (isLoading) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            my: 10,
+          }}
         >
-          See All Movies
-        </Button>
+          <Typography variant="h1" sx={styles.header}>
+            {title}
+          </Typography>
+          <CircularProgress sx={styles.loader} />
+        </Box>
+      );
+    }
+
+    if (error || !data) {
+      return <PageError key={index} />;
+    }
+
+    const { results } = data;
+
+    const mediaToShow = results.slice(0, 12).map((item) => ({
+      ...item,
+      type: mediaType,
+    })) as (Movie | Show)[];
+
+    return (
+      <Box key={index}>
+        <Box sx={styles.headerContainer}>
+          <Typography variant="h1" sx={styles.header}>
+            {title}
+          </Typography>
+        </Box>
+        <MediaCarousel media={mediaToShow} />
       </Box>
-      <MediaCarousel media={moviesToShow} />
-      <Box sx={{ ...styles.headerContainer, mt: 5 }}>
-        <Typography variant="h1" sx={styles.header}>
-          Tv Shows
-        </Typography>
-        <Button
-          component={Link}
-          variant="contained"
-          to="/media/shows"
-          sx={styles.button}
-        >
-          See All Shows
-        </Button>
-      </Box>
-      <MediaCarousel media={tvToShow} />
-    </PageWrapper>
-  );
+    );
+  });
+
+  return <PageWrapper>{components}</PageWrapper>;
 };
 
 export default Home;
