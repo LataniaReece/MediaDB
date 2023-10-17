@@ -91,15 +91,16 @@ const MediaDiscover: FC = () => {
           Reset Search
         </Button>
       )}
-      <Box sx={styles.headerContainer}>
+      <Box sx={styles.headerContainer} data-testid="mediaDiscoverHeader">
         <Typography variant="h1">
           {requestedQuery
             ? `Search Results: ${requestedQuery}`
             : `Discover ${isMovie ? "Movies" : "Shows"}`}
         </Typography>
-        <Typography sx={{ fontStyle: "italic" }}>{`${total_results} ${
-          isMovie ? "movies" : "shows"
-        }`}</Typography>
+        <Typography
+          sx={{ fontStyle: "italic" }}
+          data-testid="totalResults"
+        >{`${total_results} ${isMovie ? "movies" : "shows"}`}</Typography>
       </Box>
       <MediaGridList media={mediaDataResults} type={type} />
       <MediaPagination

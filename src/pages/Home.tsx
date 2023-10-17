@@ -5,7 +5,6 @@ import PageError from "../components/PageError";
 import MediaCarousel from "../components/media/MediaSlider";
 import { useGetMedia } from "../hooks/apiHooks/apiHooks";
 import { StylesObject } from "../types/utility";
-import { Movie, Show } from "../types/api";
 
 const styles: StylesObject = {
   headerContainer: {
@@ -53,7 +52,6 @@ const mediaData: MediaData[] = [
 
 const Home: FC = () => {
   const components = mediaData.map(({ title, url }, index) => {
-    const mediaType = title.toLowerCase().includes("movie") ? "movie" : "show";
     const { data, isLoading, error } = useGetMedia(url);
 
     if (isLoading) {
@@ -79,13 +77,10 @@ const Home: FC = () => {
 
     const { results } = data;
 
-    const mediaToShow = results.slice(0, 12).map((item) => ({
-      ...item,
-      type: mediaType,
-    })) as (Movie | Show)[];
+    const mediaToShow = results.slice(0, 12);
 
     return (
-      <Box key={index}>
+      <Box key={index} data-testid={`carousel-container-${index}`}>
         <Box sx={styles.headerContainer}>
           <Typography variant="h1" sx={styles.header}>
             {title}

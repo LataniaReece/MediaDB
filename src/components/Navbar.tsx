@@ -74,11 +74,9 @@ const styles: StylesObject = {
     color: "white",
   },
   divider: {
-    my: 2,
-  },
-  navLinks: {
-    flexDirection: "column",
-    alignItems: "flex-start",
+    my: 1,
+    backgroundColor: "white",
+    opacity: 0.4,
   },
   desktopNavLink: {
     fontSize: 20,
@@ -165,15 +163,17 @@ const Navbar: FC = () => {
                 <ListItemText primary="Home" />
               </ListItemButton>
             )}
-            <Typography sx={styles.sectionHeader}>Browse</Typography>
-            <NavbarLinksSection
-              sectionName="browse"
-              handleCloseNavMenu={handleCloseNavMenu}
-              isMobile={false}
-            />
+            <List data-testid="browse-section">
+              <Typography sx={styles.sectionHeader}>Browse</Typography>
+              <NavbarLinksSection
+                sectionName="browse"
+                handleCloseNavMenu={handleCloseNavMenu}
+                isMobile={false}
+              />
+            </List>
           </List>
           <Divider sx={styles.divider} />
-          <List sx={styles.navLinks}>
+          <List data-testid="favorites-section">
             <Typography sx={styles.sectionHeader}>Favorites</Typography>
             <NavbarLinksSection
               sectionName="favorites"

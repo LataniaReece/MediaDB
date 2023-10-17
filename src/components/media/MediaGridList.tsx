@@ -6,6 +6,7 @@ import MediaItem from "./MediaItem";
 import { Movie, Show } from "../../types/api";
 import { AppColors } from "../../theme";
 import { StylesObject } from "../../types/utility";
+import { useLocation } from "react-router-dom";
 
 interface MediaGridListProps {
   media: Movie[] | Show[];
@@ -21,6 +22,8 @@ const styles: StylesObject = {
 };
 
 const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
+  const location = useLocation();
+  const isOnFavoritesPage = location.pathname.includes("favorites");
   if (media.length === 0 && type) {
     return (
       <Box
@@ -33,7 +36,7 @@ const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
         }}
       >
         <InfoIcon sx={{ color: AppColors.blueLight, fontSize: 50, mb: 2 }} />
-        <Typography variant="h5">{`No Favorite ${
+        <Typography variant="h5">{`No${isOnFavoritesPage ? " Favorite" : ""} ${
           type === "movies" ? "Movies" : "Shows"
         } Found`}</Typography>
       </Box>
@@ -48,6 +51,7 @@ const MediaGridList: FC<MediaGridListProps> = ({ media, type }) => {
         columnSpacing={2}
         rowSpacing={3}
         sx={styles.gridContainer}
+        data-testid="mediaGridContainer"
       >
         {media.map((mediaItem) => (
           <MediaItem

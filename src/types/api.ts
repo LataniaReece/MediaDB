@@ -1,17 +1,16 @@
 interface Media {
   id: number;
-  title: string;
   overview: string;
   poster_path: string;
   backdrop_path?: string;
   tagline?: string;
-  genres: Genre[];
+  genres?: Genre[];
 }
 
 export interface Movie extends Media {
+  title: string;
   release_date?: string;
   imdb_id?: string;
-  type: "movie";
 }
 
 export interface Show extends Media {
@@ -21,7 +20,6 @@ export interface Show extends Media {
   number_of_episodes?: number;
   number_of_seasons?: number;
   status?: string;
-  type: "show";
 }
 
 export interface Genre {

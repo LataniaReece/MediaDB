@@ -92,7 +92,7 @@ const MediaItem: FC<MediaItemProps> = ({ media, itemType }) => {
               ? `https://image.tmdb.org/t/p/original${media.poster_path}`
               : placeholder
           }
-          alt={media.title}
+          alt={isMovie(media) ? media.title : media.name}
           sx={styles.mediaImg}
         />
       </Box>
@@ -136,7 +136,14 @@ const MediaItem: FC<MediaItemProps> = ({ media, itemType }) => {
   return (
     <>
       {itemType === "gridItem" ? (
-        <Grid item xs={4} sm={3} lg={2} sx={styles.mediaItem}>
+        <Grid
+          item
+          xs={4}
+          sm={3}
+          lg={2}
+          sx={styles.mediaItem}
+          data-testid="mediaGridItem"
+        >
           {itemContent}
         </Grid>
       ) : (
