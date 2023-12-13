@@ -1,27 +1,11 @@
-# React + TypeScript + Vite
+# MediaDB App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Full Site](https://mediadb.netlify.app/). A responsive streaming app using the third-party API “themoviedb” for movie and TV data. 
 
-Currently, two official plugins are available:
+Developed with React + TypeScript using Context API for favorites management. Select components are also backed by robust unit tests.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# What I Learned
 
-## Expanding the ESLint configuration
+In this app, my primary aim was to use a third-party API (https://developer.themoviedb.org/docs) and build a typical streaming app design. For this straightforward app, I chose Context API over Redux for state management. While reacquainting myself with this approach, I appreciated the out-of-the-box features that the Context API offered, finding it much simpler than Redux.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+I also intentionally included TypeScript in my toolkit as I wanted to use this as an opportunity to enhance those skills. Similarly, I explored unit tests with vitest and @testing-library/react. While the initial configuration was a bit challenging, I successfully navigated through it. Consequently, I have established a reusable template that can be applied in other apps.
